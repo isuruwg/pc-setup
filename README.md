@@ -5,6 +5,8 @@
   - [2.1. Setting up networking](#21-setting-up-networking)
   - [2.2. Install nicer fonts](#22-install-nicer-fonts)
   - [2.3. Rofi](#23-rofi)
+  - [2.4. i3blocks](#24-i3blocks)
+    - [i3blocks contrib](#i3blocks-contrib)
 - [3. Install the basics](#3-install-the-basics)
   - [3.1. Git](#31-git)
   - [3.2. VSCode](#32-vscode)
@@ -79,6 +81,23 @@ bindsym $mod+d exec --no-startup-id rofi -combi-modi 'window#drun#run' -show com
 ```
 
 (Make sure you comment out the other commands that get triggered with $mod+d)
+
+## 2.4. i3blocks
+
+i3blocks provides a better(subjective opinion) status bar than the i3bar that comes default with i3.
+
+I've added the i3blocks git repo as a submodule to this repo by using the following:
+(More info about submodules can be found [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules))
+
+```bash
+git submodule add https://github.com/vivien/i3blocks.git
+```
+
+### i3blocks contrib
+
+```bash
+git submodule add https://github.com/vivien/i3blocks-contrib.git
+```
 
 # 3. Install the basics
 
