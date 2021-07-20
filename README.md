@@ -41,7 +41,10 @@ git clone --recurse-submodules git@github.com:isuruwg/pc-setup.git
 
 ### 1.1.1. Updating submodules to latest
 
-By default, the above commands only get the submodule versions that were used in the last commit of this repo. However, if you want to get updates from the submodules to use the latest version, you can do `git submodule update --remote`
+By default, the above commands only get the submodule versions that were used in the last commit of this repo.
+You can check what's changed in the submodule in the remote by doing `git fetch` followed by a `git merge` to merge the upstream branch to update the local files (from within the submodule folder).
+
+If you just want to get updates from the submodules, overwrite what's in local to use the latest version, you can do `git submodule update --remote`
 
 # 2. Install i3
 
