@@ -15,6 +15,7 @@
     - [3.5.1. Installing i3blocks](#351-installing-i3blocks)
     - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
     - [3.5.3. i3block: Bandwidth](#353-i3block-bandwidth)
+    - [3.5.4. Volume control](#354-volume-control)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
@@ -195,6 +196,13 @@ git submodule add https://github.com/vivien/i3blocks-contrib.git
 cd i3blocks-contrib/bandwidth2
 make
 mv bandwidth2 ../../i3/my-i3blocks/
+```
+
+### 3.5.4. Volume control
+
+```bash
+cd i3blocks-contrib/volume
+cp volume ../../i3/my-i3blocks/
 ```
 
 # 4. Install other everyday programs
