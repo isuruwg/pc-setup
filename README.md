@@ -3,21 +3,24 @@
 - [1. Introduction](#1-introduction)
   - [1.1. Submodules and notes for cloning this repo](#11-submodules-and-notes-for-cloning-this-repo)
     - [1.1.1. Updating submodules to latest](#111-updating-submodules-to-latest)
-- [2. Install i3](#2-install-i3)
-  - [2.1. Setting up networking](#21-setting-up-networking)
-  - [2.2. Install nicer fonts](#22-install-nicer-fonts)
-  - [2.3. Rofi](#23-rofi)
-  - [2.4. Audio control](#24-audio-control)
-  - [2.5. i3blocks](#25-i3blocks)
-    - [2.5.1. Installing i3blocks](#251-installing-i3blocks)
-    - [2.5.2. i3blocks contrib](#252-i3blocks-contrib)
-    - [2.5.3. i3block: Bandwidth](#253-i3block-bandwidth)
-- [3. Install the basics](#3-install-the-basics)
-  - [3.1. Git](#31-git)
-  - [3.2. VSCode](#32-vscode)
-  - [3.3. VLC](#33-vlc)
-  - [3.4. gnucash](#34-gnucash)
-  - [3.5. Install chromium](#35-install-chromium)
+- [2. Install/configure the essentials](#2-installconfigure-the-essentials)
+  - [2.1. Enable firewall](#21-enable-firewall)
+  - [2.2. Fail2ban (Needed only if you have enabled connections through your firewall)](#22-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
+  - [2.3. Git](#23-git)
+- [3. Install i3](#3-install-i3)
+  - [3.1. Setting up networking](#31-setting-up-networking)
+  - [3.2. Install nicer fonts](#32-install-nicer-fonts)
+  - [3.3. Rofi](#33-rofi)
+  - [3.4. Audio control](#34-audio-control)
+  - [3.5. i3blocks](#35-i3blocks)
+    - [3.5.1. Installing i3blocks](#351-installing-i3blocks)
+    - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
+    - [3.5.3. i3block: Bandwidth](#353-i3block-bandwidth)
+- [4. Install other everyday programs](#4-install-other-everyday-programs)
+  - [4.1. VSCode](#41-vscode)
+  - [4.2. VLC](#42-vlc)
+  - [4.3. gnucash](#43-gnucash)
+  - [4.4. Install chromium](#44-install-chromium)
 
 # 1. Introduction
 
@@ -46,7 +49,66 @@ You can check what's changed in the submodule in the remote by doing `git fetch`
 
 If you just want to get updates from the submodules, overwrite what's in local to use the latest version, you can do `git submodule update --remote`
 
-# 2. Install i3
+# 2. Install/configure the essentials
+
+## 2.1. Enable firewall
+
+Install [ufw](https://help.ubuntu.com/community/UFW) if it's not already installed by doing `sudo apt install ufw`. This comes pre-installed with Ubuntu distributions. Then enable ufw as follows:
+
+```bash
+sudo ufw enable
+```
+
+Other useful commands:
+```bash
+# Check status:
+sudo ufw status verbose
+
+# Enable ssh access (Only if needed)
+sudo ufw allow ssh
+
+# Limit login attempts on ssh ports to 6 times per 30 seconds
+sudo ufw limit ssh/tcp
+```
+
+## 2.2. Fail2ban (Needed only if you have enabled connections through your firewall)
+
+[fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page) ([GitHub](https://github.com/fail2ban/fail2ban)) scans log files and bans IPs that show malicious signs. 
+
+**Please note that you do not need to install this if you didn't enable any ssh or other types of connections to your pc through your firewall. [see ufw section above](#21-enable-firewall)**. 
+
+```bash
+sudo apt install fail2ban
+# Create a new local config file by copying the jail.conf
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo nano /etc/fail2ban/jail.local
+```
+
+Add the following at the end of the `/etc/fail2ban/jail.local` file: ( You may already have a [sshd] section, if so, update that section)
+
+```bash
+[ssh]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 6
+```
+Other useful fail2ban commands
+
+- If you get banned you can unban by: `sudo fail2ban-client set sshd unbanip IP_ADDRESS` 
+- Check sshd status: `sudo fail2ban-client status sshd`
+- Check auth log: `cat /var/log/auth.log`
+- View all banned IPs: `sudo zgrep 'Ban' /var/log/fail2ban.log*` [[source](https://serverfault.com/questions/841183/how-to-show-all-banned-ip-with-fail2ban)] ( or `sudo zgrep 'NOTICE' /var/log/fail2ban.log*` to view all `NOTICE` level messages.
+
+
+## 2.3. Git
+
+```bash
+sudo apt install git
+```
+
+# 3. Install i3
 
 - Follow the instructions from [here](https://i3wm.org/docs/repositories.html)
 
@@ -68,13 +130,13 @@ If you just want to get updates from the submodules, overwrite what's in local t
 - Upon login you will be asked to select config file location, select the default one.
 - Next you will be asked to select the MOD key. I chose the ALT key for this. Throughout this guide the mod key will be referred to as `$mod`
 
-## 2.1. Setting up networking
+## 3.1. Setting up networking
 
 [Reference](https://faq.i3wm.org/question/2/how-can-i-use-networkmanager-with-i3.1.html)
 
 ~~Add exec `--no-startup-id nm-applet` to `~/.config/i3/config` file to start the tray icon for networking.  [NOTE: I have tested this only on the i3blocks status bar. This might not work properly with i3-bar]~~ New versions of i3 comes with this line already in config file
 
-## 2.2. Install nicer fonts
+## 3.2. Install nicer fonts
 
 - Make folder: `mkdir ~/.fonts`
 - Install font-awesome [[REF](https://youtu.be/8-S0cWnLBKg?t=1616)]
@@ -98,7 +160,7 @@ If you just want to get updates from the submodules, overwrite what's in local t
   - Unzip and move the `.ttf` files to `~/.fonts/` folder by: `mv *.ttf ~/.fonts/`
   - Change the font line in i3 config to: `font pango:System San Francisco Display Thin 16`
 
-## 2.3. Rofi
+## 3.3. Rofi
 
 I did `sudo apt install rofi`. TODO: Try out installation from release.
 
@@ -110,13 +172,13 @@ bindsym $mod+d exec --no-startup-id rofi -combi-modi 'window#drun#run' -show com
 
 (Make sure you comment out the other commands that get triggered with $mod+d)
 
-## 2.4. Audio control
+## 3.4. Audio control
 
 ```bash
 sudo apt install pavucontrol
 ```
 
-## 2.5. i3blocks
+## 3.5. i3blocks
 
 i3blocks provides a better(subjective opinion) status bar than the i3bar that comes default with i3.
 
@@ -127,7 +189,7 @@ I've added the i3blocks git repo as a submodule to this repo by using the follow
 git submodule add https://github.com/vivien/i3blocks.git
 ```
 
-### 2.5.1. Installing i3blocks
+### 3.5.1. Installing i3blocks
 
 Since the i3blocks included with Ubuntu apt is outdated, I installed it from source.
 [Ref](https://github.com/vivien/i3blocks#installation)
@@ -143,7 +205,7 @@ sudo make install
 ```
 
 
-### 2.5.2. i3blocks contrib
+### 3.5.2. i3blocks contrib
 
 I've added i3blocks-contrib as a submodule to this repo.
 
@@ -151,7 +213,7 @@ I've added i3blocks-contrib as a submodule to this repo.
 git submodule add https://github.com/vivien/i3blocks-contrib.git
 ```
 
-### 2.5.3. i3block: Bandwidth
+### 3.5.3. i3block: Bandwidth
 
 ```bash
 cd i3blocks-contrib/bandwidth2
@@ -159,15 +221,9 @@ make
 mv bandwidth2 ../../i3/my-i3blocks/
 ```
 
-# 3. Install the basics
+# 4. Install other everyday programs
 
-## 3.1. Git
-
-```bash
-sudo apt install git
-```
-
-## 3.2. VSCode
+## 4.1. VSCode
 
 [REF](https://code.visualstudio.com/docs/setup/linux)
 
@@ -175,7 +231,7 @@ sudo apt install git
 sudo snap install --classic code
 ```
 
-## 3.3. VLC
+## 4.2. VLC
 
 [REF](https://www.videolan.org/vlc/download-ubuntu.html)
 
@@ -183,13 +239,13 @@ sudo snap install --classic code
 sudo snap install vlc
 ```
 
-## 3.4. gnucash
+## 4.3. gnucash
 
 ```
 sudo apt install gnucash
 ```
 
-## 3.5. Install chromium
+## 4.4. Install chromium
 
 ```bash
 sudo snap install chromium
