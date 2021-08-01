@@ -5,8 +5,7 @@
     - [1.1.1. Updating submodules to latest](#111-updating-submodules-to-latest)
 - [2. Install/configure the essentials](#2-installconfigure-the-essentials)
   - [2.1. Enable firewall](#21-enable-firewall)
-  - [2.2. Fail2ban (Needed only if you have enabled connections through your firewall)](#22-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
-  - [2.3. Git](#23-git)
+  - [2.2. Git](#22-git)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -17,10 +16,13 @@
     - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
     - [3.5.3. i3block: Bandwidth](#353-i3block-bandwidth)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
-  - [4.1. VSCode](#41-vscode)
-  - [4.2. VLC](#42-vlc)
-  - [4.3. gnucash](#43-gnucash)
-  - [4.4. Install chromium](#44-install-chromium)
+  - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
+  - [4.2. VSCode](#42-vscode)
+  - [4.3. VLC](#43-vlc)
+  - [4.4. gnucash](#44-gnucash)
+  - [4.5. Install chromium](#45-install-chromium)
+- [5. Troubleshooting](#5-troubleshooting)
+  - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
 # 1. Introduction
 
@@ -49,11 +51,13 @@ You can check what's changed in the submodule in the remote by doing `git fetch`
 
 If you just want to get updates from the submodules, overwrite what's in local to use the latest version, you can do `git submodule update --remote`
 
+If you get an error saying `HEAD` is detached in submodule, please do `git checkout master` (The main branch of both i3blocks and i3blocks-contrib is called `master`) in the submodule folder.
+
 # 2. Install/configure the essentials
 
 ## 2.1. Enable firewall
 
-Install [ufw](https://help.ubuntu.com/community/UFW) if it's not already installed by doing `sudo apt install ufw`. This comes pre-installed with Ubuntu distributions. Then enable ufw as follows:
+Install [ufw](https://help.ubuntu.com/community/UFW) if it's not already installed by doing `sudo apt install ufw`. This usually comes pre-installed with Ubuntu distributions. Then enable ufw as follows:
 
 ```bash
 sudo ufw enable
@@ -71,38 +75,10 @@ sudo ufw allow ssh
 sudo ufw limit ssh/tcp
 ```
 
-## 2.2. Fail2ban (Needed only if you have enabled connections through your firewall)
-
-[fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page) ([GitHub](https://github.com/fail2ban/fail2ban)) scans log files and bans IPs that show malicious signs. 
-
-**Please note that you do not need to install this if you didn't enable any ssh or other types of connections to your pc through your firewall. [see ufw section above](#21-enable-firewall)**. 
-
-```bash
-sudo apt install fail2ban
-# Create a new local config file by copying the jail.conf
-sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-sudo nano /etc/fail2ban/jail.local
-```
-
-Add the following at the end of the `/etc/fail2ban/jail.local` file: ( You may already have a [sshd] section, if so, update that section)
-
-```bash
-[ssh]
-enabled  = true
-port     = ssh
-filter   = sshd
-logpath  = /var/log/auth.log
-maxretry = 6
-```
-Other useful fail2ban commands
-
-- If you get banned you can unban by: `sudo fail2ban-client set sshd unbanip IP_ADDRESS` 
-- Check sshd status: `sudo fail2ban-client status sshd`
-- Check auth log: `cat /var/log/auth.log`
-- View all banned IPs: `sudo zgrep 'Ban' /var/log/fail2ban.log*` [[source](https://serverfault.com/questions/841183/how-to-show-all-banned-ip-with-fail2ban)] ( or `sudo zgrep 'NOTICE' /var/log/fail2ban.log*` to view all `NOTICE` level messages.
+If you did enable any connections into your pc, please also consider installing fail2ban. See [section on fail2ban](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall) for more info.
 
 
-## 2.3. Git
+## 2.2. Git
 
 ```bash
 sudo apt install git
@@ -223,7 +199,39 @@ mv bandwidth2 ../../i3/my-i3blocks/
 
 # 4. Install other everyday programs
 
-## 4.1. VSCode
+## 4.1. Fail2ban (Needed only if you have enabled connections through your firewall)
+
+[fail2ban](https://www.fail2ban.org/wiki/index.php/Main_Page) ([GitHub](https://github.com/fail2ban/fail2ban)) scans log files and bans IPs that show malicious signs. 
+
+**Please note that you do not need to install this if you didn't enable any ssh or other types of connections to your pc through your firewall. [see ufw section above](#21-enable-firewall)**. 
+
+```bash
+sudo apt install fail2ban
+# Create a new local config file by copying the jail.conf
+sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+sudo nano /etc/fail2ban/jail.local
+```
+
+Add the following at the end of the `/etc/fail2ban/jail.local` file: ( You may already have a [sshd] section, if so, update that section)
+
+```bash
+[ssh]
+enabled  = true
+port     = ssh
+filter   = sshd
+logpath  = /var/log/auth.log
+maxretry = 6
+```
+Other useful fail2ban commands
+
+- If you get banned you can unban by: `sudo fail2ban-client set sshd unbanip IP_ADDRESS` 
+- Check sshd status: `sudo fail2ban-client status sshd`
+- Check auth log: `cat /var/log/auth.log`
+- View all banned IPs: `sudo zgrep 'Ban' /var/log/fail2ban.log*` [[source](https://serverfault.com/questions/841183/how-to-show-all-banned-ip-with-fail2ban)] ( or `sudo zgrep 'NOTICE' /var/log/fail2ban.log*` to view all `NOTICE` level messages.
+
+[OPTIONAL] : You can also make fail2ban and ufw work together better by following [this](https://askubuntu.com/questions/54771/potential-ufw-and-fail2ban-conflicts)
+
+## 4.2. VSCode
 
 [REF](https://code.visualstudio.com/docs/setup/linux)
 
@@ -231,7 +239,7 @@ mv bandwidth2 ../../i3/my-i3blocks/
 sudo snap install --classic code
 ```
 
-## 4.2. VLC
+## 4.3. VLC
 
 [REF](https://www.videolan.org/vlc/download-ubuntu.html)
 
@@ -239,14 +247,33 @@ sudo snap install --classic code
 sudo snap install vlc
 ```
 
-## 4.3. gnucash
+## 4.4. gnucash
 
 ```
 sudo apt install gnucash
 ```
 
-## 4.4. Install chromium
+## 4.5. Install chromium
 
 ```bash
 sudo snap install chromium
 ```
+
+# 5. Troubleshooting
+
+## 5.1. SD card mounts as read only on Ubuntu
+
+When trying to edit files in the newly created SD card for things like setting up a static IP, one of the problems could be the SD card mounting as read-only on Ubuntu. 
+
+Following solution worked for me: [[Source](https://askubuntu.com/questions/488264/my-microsd-mounted-read-only)] , [[alternate source](https://maxwyb.github.io/linux,/disk,/partition/2020/01/14/microsd-read-only.html)]
+
+- Check the device name 
+  ```bash
+  sudo fdisk -l
+  ```
+  You can also use `mount -v` to get a list of mounted drives with their permissions
+  
+- Unmount and remount it (Replace the device name in the command below with your one)
+  ```bash
+  sudo mount -o remount,rw /dev/mmcblk0p2
+  ```
