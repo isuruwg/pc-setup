@@ -6,7 +6,7 @@
 - [2. Install/configure the essentials](#2-installconfigure-the-essentials)
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
-  - [Meld](#meld)
+  - [2.3. Meld](#23-meld)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -15,9 +15,10 @@
   - [3.5. i3blocks](#35-i3blocks)
     - [3.5.1. Installing i3blocks](#351-installing-i3blocks)
     - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
-    - [3.5.3. i3block: Bandwidth](#353-i3block-bandwidth)
-    - [3.5.4. Volume control](#354-volume-control)
-  - [Copy modified i3 config file to ~/.config/i3/](#copy-modified-i3-config-file-to-configi3)
+    - [3.5.3. i3block: apt-upgrades](#353-i3block-apt-upgrades)
+    - [3.5.4. i3block: Bandwidth](#354-i3block-bandwidth)
+    - [3.5.5. i3block: Volume control](#355-i3block-volume-control)
+  - [3.6. Copy modified i3 config file to ~/.config/i3/](#36-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
@@ -87,7 +88,7 @@ If you did enable any connections into your pc, please also consider installing 
 sudo apt install git
 ```
 
-## Meld
+## 2.3. Meld
 
 ```bash
 sudo apt install meld
@@ -189,7 +190,6 @@ make
 sudo make install
 ```
 
-
 ### 3.5.2. i3blocks contrib
 
 I've added i3blocks-contrib as a submodule to this repo.
@@ -198,22 +198,53 @@ I've added i3blocks-contrib as a submodule to this repo.
 git submodule add https://github.com/vivien/i3blocks-contrib.git
 ```
 
-### 3.5.3. i3block: Bandwidth
+You can check the differences between the i3blocks-config scripts in my repo vs the ones from the original repo by doing:
 
 ```bash
-cd i3blocks-contrib/bandwidth2
+meld i3/my-i3blocks/<SCRIPT-NAME> i3blocks-contrib/<SCRIPT-FOLDER-NAME>/<SCRIPT-NAME>
+```
+
+The corresponding commands to quickly check differences in the modules I've used are as follows:
+
+```bash
+# apt-upgrades
+meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
+
+# bandwidth (folder compare)
+meld i3/my-i3blocks/bandwidth2-source/ i3blocks-contrib/bandwidth2/
+
+#volume
+meld i3/my-i3blocks/volume i3blocks-contrib/volume/volume
+
+
+```
+
+### 3.5.3. i3block: apt-upgrades
+
+NOTE: I have changed this script and renamed it to [i3/my-i3blocks/checkupdates](i3/my-i3blocks/checkupdates). So check with meld and include any new changes from the i3blocks-contrib repo as necessary.
+
+```bash
+meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
+```
+
+### 3.5.4. i3block: Bandwidth
+
+```bash
+# Copy source
+cp i3blocks-contrib/bandwidth2/* i3/my-i3blocks/bandwidth2-source/
+cd i3/my-i3blocks/bandwidth2-source/
 make
-mv bandwidth2 ../../i3/my-i3blocks/
+mv bandwidth2 ..
 ```
 
-### 3.5.4. Volume control
+### 3.5.5. i3block: Volume control
 
 ```bash
-cd i3blocks-contrib/volume
-cp volume ../../i3/my-i3blocks/
+cd 
+cp i3blocks-contrib/volume/volume i3/my-i3blocks/
 ```
 
-## Copy modified i3 config file to ~/.config/i3/
+## 3.6. Copy modified i3 config file to ~/.config/i3/
 
 Check the differences between your default config file and the config file available in your new i3 installation
 
