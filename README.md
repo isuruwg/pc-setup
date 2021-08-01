@@ -6,6 +6,7 @@
 - [2. Install/configure the essentials](#2-installconfigure-the-essentials)
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
+  - [Meld](#meld)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -16,6 +17,7 @@
     - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
     - [3.5.3. i3block: Bandwidth](#353-i3block-bandwidth)
     - [3.5.4. Volume control](#354-volume-control)
+  - [Copy modified i3 config file to ~/.config/i3/](#copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
@@ -83,6 +85,12 @@ If you did enable any connections into your pc, please also consider installing 
 
 ```bash
 sudo apt install git
+```
+
+## Meld
+
+```bash
+sudo apt install meld
 ```
 
 # 3. Install i3
@@ -203,6 +211,18 @@ mv bandwidth2 ../../i3/my-i3blocks/
 ```bash
 cd i3blocks-contrib/volume
 cp volume ../../i3/my-i3blocks/
+```
+
+## Copy modified i3 config file to ~/.config/i3/
+
+Check the differences between your default config file and the config file available in your new i3 installation
+
+```bash
+meld ~/.config/i3/config i3/config
+```
+
+```bash
+cp i3/config ~/.config/i3/
 ```
 
 # 4. Install other everyday programs
