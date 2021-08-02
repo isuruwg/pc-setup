@@ -126,6 +126,7 @@ menu=(
   [TV-1080-60]="xrandr --output DP-3 --mode 1920x1080 --right-of DP-0 --rate 60.00 --scale 1.0x1.0 --output HDMI-0 --off --output DP-0 --off"
   [2DP]="xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --output DP-0 --mode 2560x1440 --output DP-3 --off"
   [2DP-144]="xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --rate 144.00 --output DP-0 --mode 2560x1440 --output DP-3 --off"
+  [1DP]="xrandr --output HDMI-0 --off --output DP-0 --mode 2560x1440 --output DP-3 --off"
 )
 menu_nrows=${#menu[@]}
 
