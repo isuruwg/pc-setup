@@ -22,14 +22,14 @@
     - [3.5.5. i3block: Volume control](#355-i3block-volume-control)
     - [3.5.6. i3block: memory](#356-i3block-memory)
     - [3.5.7. i3block: disk](#357-i3block-disk)
-    - [i3block: cpu and hdd temperature](#i3block-cpu-and-hdd-temperature)
-    - [i3block: wifi](#i3block-wifi)
-    - [i3block: cpu_usage](#i3block-cpu_usage)
-    - [i3block: load_average](#i3block-load_average)
-    - [i3block: gpu-load](#i3block-gpu-load)
-    - [i3block: timer_and_stopwatch](#i3block-timer_and_stopwatch)
-    - [i3block: keyindicator](#i3block-keyindicator)
-    - [i3block: shutdown_menu](#i3block-shutdown_menu)
+    - [3.5.8. i3block: cpu and hdd temperature](#358-i3block-cpu-and-hdd-temperature)
+    - [3.5.9. i3block: wifi](#359-i3block-wifi)
+    - [3.5.10. i3block: cpu_usage](#3510-i3block-cpu_usage)
+    - [3.5.11. i3block: load_average](#3511-i3block-load_average)
+    - [3.5.12. i3block: gpu-load](#3512-i3block-gpu-load)
+    - [3.5.13. i3block: timer_and_stopwatch](#3513-i3block-timer_and_stopwatch)
+    - [3.5.14. i3block: keyindicator](#3514-i3block-keyindicator)
+    - [3.5.15. i3block: shutdown_menu](#3515-i3block-shutdown_menu)
   - [3.6. Copy modified i3 config file to ~/.config/i3/](#36-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
@@ -306,7 +306,7 @@ cp i3blocks-contrib/memory/memory i3/my-i3blocks/
 cp i3blocks-contrib/disk/disk i3/my-i3blocks/
 ```
 
-### i3block: cpu and hdd temperature
+### 3.5.8. i3block: cpu and hdd temperature
 
 I've added a nicer gradient temperature script from [here](https://github.com/hastinbe/i3blocks-gradient-temp) instead of the default temperature script.
 
@@ -320,43 +320,43 @@ git submodule add https://github.com/hastinbe/i3blocks-gradient-temp
 cp i3blocks-gradient-temp/gradient-temp i3/my-i3blocks
 ```
 
-### i3block: wifi
+### 3.5.9. i3block: wifi
 
 ```bash
 cp i3blocks-contrib/wifi/wifi i3/my-i3blocks
 ```
 
-### i3block: cpu_usage
+### 3.5.10. i3block: cpu_usage
 
 ```bash
 cp i3blocks-contrib/cpu_usage/cpu_usage i3/my-i3blocks
 ```
 
-### i3block: load_average
+### 3.5.11. i3block: load_average
 
 ```bash
 cp i3blocks-contrib/load_average/load_average i3/my-i3blocks
 ```
 
-### i3block: gpu-load
+### 3.5.12. i3block: gpu-load
 
 ```bash
 cp i3blocks-contrib/gpu-load/gpu-load i3/my-i3blocks
 ```
 
-### i3block: timer_and_stopwatch
+### 3.5.13. i3block: timer_and_stopwatch
 
 ```bash
 cp i3blocks-contrib/timer_and_stopwatch/timer_and_stopwatch i3/my-i3blocks
 ```
 
-### i3block: keyindicator
+### 3.5.14. i3block: keyindicator
 
 ```bash
 cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
 ```
 
-### i3block: shutdown_menu
+### 3.5.15. i3block: shutdown_menu
 
 ```bash
 cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
