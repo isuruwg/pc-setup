@@ -15,23 +15,26 @@
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
   - [3.3. Rofi](#33-rofi)
   - [3.4. Audio control](#34-audio-control)
-  - [3.5. i3blocks](#35-i3blocks)
-    - [3.5.1. Installing i3blocks](#351-installing-i3blocks)
-    - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
-    - [3.5.3. i3block: apt-upgrades](#353-i3block-apt-upgrades)
-    - [3.5.4. i3block: Bandwidth](#354-i3block-bandwidth)
-    - [3.5.5. i3block: Volume control](#355-i3block-volume-control)
-    - [3.5.6. i3block: memory](#356-i3block-memory)
-    - [3.5.7. i3block: disk](#357-i3block-disk)
-    - [3.5.8. i3block: cpu and hdd temperature](#358-i3block-cpu-and-hdd-temperature)
-    - [3.5.9. i3block: wifi](#359-i3block-wifi)
-    - [3.5.10. i3block: cpu_usage](#3510-i3block-cpu_usage)
-    - [3.5.11. i3block: load_average](#3511-i3block-load_average)
-    - [3.5.12. i3block: gpu-load](#3512-i3block-gpu-load)
-    - [3.5.13. i3block: timer_and_stopwatch](#3513-i3block-timer_and_stopwatch)
-    - [3.5.14. i3block: keyindicator](#3514-i3block-keyindicator)
-    - [3.5.15. i3block: shutdown_menu](#3515-i3block-shutdown_menu)
-  - [3.6. Copy modified i3 config file to ~/.config/i3/](#36-copy-modified-i3-config-file-to-configi3)
+  - [3.5. Screen resolution and display control](#35-screen-resolution-and-display-control)
+    - [3.5.1. xrandr](#351-xrandr)
+    - [3.5.2. arandr](#352-arandr)
+  - [3.6. i3blocks](#36-i3blocks)
+    - [3.6.1. Installing i3blocks](#361-installing-i3blocks)
+    - [3.6.2. i3blocks contrib](#362-i3blocks-contrib)
+    - [3.6.3. i3block: apt-upgrades](#363-i3block-apt-upgrades)
+    - [3.6.4. i3block: Bandwidth](#364-i3block-bandwidth)
+    - [3.6.5. i3block: Volume control](#365-i3block-volume-control)
+    - [3.6.6. i3block: memory](#366-i3block-memory)
+    - [3.6.7. i3block: disk](#367-i3block-disk)
+    - [3.6.8. i3block: cpu and hdd temperature](#368-i3block-cpu-and-hdd-temperature)
+    - [3.6.9. i3block: wifi](#369-i3block-wifi)
+    - [3.6.10. i3block: cpu_usage](#3610-i3block-cpu_usage)
+    - [3.6.11. i3block: load_average](#3611-i3block-load_average)
+    - [3.6.12. i3block: gpu-load](#3612-i3block-gpu-load)
+    - [3.6.13. i3block: timer_and_stopwatch](#3613-i3block-timer_and_stopwatch)
+    - [3.6.14. i3block: keyindicator](#3614-i3block-keyindicator)
+    - [3.6.15. i3block: shutdown_menu](#3615-i3block-shutdown_menu)
+  - [3.7. Copy modified i3 config file to ~/.config/i3/](#37-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
@@ -201,7 +204,28 @@ bindsym $mod+d exec --no-startup-id rofi -combi-modi 'window#drun#run' -show com
 sudo apt install pavucontrol
 ```
 
-## 3.5. i3blocks
+## 3.5. Screen resolution and display control
+
+### 3.5.1. xrandr
+
+Run `xrandr` on a terminal to see the active display configuration.
+
+Following are some scripts I use for configuration:
+
+1. Two screens on my desk:  
+    `xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --output DP-0 --mode 2560x1440 --output DP-3 --off`
+
+2. Two screens on desk (144Hz for 24 inch monitor)  
+    `xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --rate 144.00 --output DP-0 --mode 2560x1440 --output DP-3 --off`
+
+3. TV only  
+    `xrandr --output DP-3 --mode 3840x2160 --right-of DP-0 --scale 0.5x0.5 --output HDMI-0 --off --output DP-0 --off`
+
+### 3.5.2. arandr
+
+Install arandr by doing `sudo apt install arandr`
+
+## 3.6. i3blocks
 
 i3blocks provides a better(subjective opinion) status bar than the i3bar that comes default with i3.
 
@@ -212,7 +236,7 @@ I've added the i3blocks git repo as a submodule to this repo by using the follow
 git submodule add https://github.com/vivien/i3blocks.git
 ```
 
-### 3.5.1. Installing i3blocks
+### 3.6.1. Installing i3blocks
 
 Since the i3blocks included with Ubuntu apt is outdated, I installed it from source.
 [Ref](https://github.com/vivien/i3blocks#installation)
@@ -227,7 +251,7 @@ make
 sudo make install
 ```
 
-### 3.5.2. i3blocks contrib
+### 3.6.2. i3blocks contrib
 
 I've added i3blocks-contrib as a submodule to this repo.
 
@@ -279,7 +303,7 @@ meld i3/my-i3blocks/gradient-temp i3blocks-gradient-temp/gradient-temp
 
 ```
 
-### 3.5.3. i3block: apt-upgrades
+### 3.6.3. i3block: apt-upgrades
 
 NOTE: I have changed this script and renamed it to [i3/my-i3blocks/checkupdates](i3/my-i3blocks/checkupdates). So check with meld and include any new changes from the i3blocks-contrib repo as necessary.
 
@@ -287,7 +311,7 @@ NOTE: I have changed this script and renamed it to [i3/my-i3blocks/checkupdates]
 meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
 ```
 
-### 3.5.4. i3block: Bandwidth
+### 3.6.4. i3block: Bandwidth
 
 ```bash
 # Copy source
@@ -297,25 +321,25 @@ make
 mv bandwidth2 ..
 ```
 
-### 3.5.5. i3block: Volume control
+### 3.6.5. i3block: Volume control
 
 ```bash
 cp i3blocks-contrib/volume/volume i3/my-i3blocks/
 ```
 
-### 3.5.6. i3block: memory
+### 3.6.6. i3block: memory
 
 ```bash
 cp i3blocks-contrib/memory/memory i3/my-i3blocks/
 ```
 
-### 3.5.7. i3block: disk
+### 3.6.7. i3block: disk
 
 ```bash
 cp i3blocks-contrib/disk/disk i3/my-i3blocks/
 ```
 
-### 3.5.8. i3block: cpu and hdd temperature
+### 3.6.8. i3block: cpu and hdd temperature
 
 I've added a nicer gradient temperature script from [here](https://github.com/hastinbe/i3blocks-gradient-temp) instead of the default temperature script.
 
@@ -329,50 +353,50 @@ git submodule add https://github.com/hastinbe/i3blocks-gradient-temp
 cp i3blocks-gradient-temp/gradient-temp i3/my-i3blocks
 ```
 
-### 3.5.9. i3block: wifi
+### 3.6.9. i3block: wifi
 
 ```bash
 cp i3blocks-contrib/wifi/wifi i3/my-i3blocks
 ```
 
-### 3.5.10. i3block: cpu_usage
+### 3.6.10. i3block: cpu_usage
 
 ```bash
 cp i3blocks-contrib/cpu_usage/cpu_usage i3/my-i3blocks
 ```
 
-### 3.5.11. i3block: load_average
+### 3.6.11. i3block: load_average
 
 ```bash
 cp i3blocks-contrib/load_average/load_average i3/my-i3blocks
 ```
 
-### 3.5.12. i3block: gpu-load
+### 3.6.12. i3block: gpu-load
 
 ```bash
 cp i3blocks-contrib/gpu-load/gpu-load i3/my-i3blocks
 ```
 
-### 3.5.13. i3block: timer_and_stopwatch
+### 3.6.13. i3block: timer_and_stopwatch
 
 ```bash
 cp i3blocks-contrib/timer_and_stopwatch/timer_and_stopwatch i3/my-i3blocks
 ```
 
-### 3.5.14. i3block: keyindicator
+### 3.6.14. i3block: keyindicator
 
 ```bash
 cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
 ```
 
-### 3.5.15. i3block: shutdown_menu
+### 3.6.15. i3block: shutdown_menu
 
 ```bash
 cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
 ```
 
 
-## 3.6. Copy modified i3 config file to ~/.config/i3/
+## 3.7. Copy modified i3 config file to ~/.config/i3/
 
 Check the differences between your default config file and the config file available in your new i3 installation
 
