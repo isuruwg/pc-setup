@@ -9,6 +9,7 @@
   - [2.2. Git](#22-git)
   - [2.3. Meld](#23-meld)
   - [2.4. Sensors](#24-sensors)
+  - [xautolock](#xautolock)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -120,6 +121,14 @@ sudo apt install lm-sensors
 sudo sensors-detect
 # Selected yes to everything
 sensors
+```
+
+## xautolock
+
+xautolock is required for automatically locking the screen with i3. If you are not using i3, this is not needed
+
+```bash
+sudo apt install xautolock
 ```
 
 # 3. Install i3
