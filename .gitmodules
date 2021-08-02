@@ -4,3 +4,6 @@
 [submodule "i3blocks-contrib"]
 	path = i3blocks-contrib
 	url = https://github.com/vivien/i3blocks-contrib.git
+[submodule "i3blocks-gradient-temp"]
+	path = i3blocks-gradient-temp
+	url = https://github.com/hastinbe/i3blocks-gradient-temp

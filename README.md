@@ -1,11 +1,14 @@
 # TOC <!-- omit in toc -->
 
 - [1. Introduction](#1-introduction)
-  - [1.1. Submodules and notes for cloning this repo](#11-submodules-and-notes-for-cloning-this-repo)
-    - [1.1.1. Updating submodules to latest](#111-updating-submodules-to-latest)
+  - [1.1. Quick and easy setup without following this full guide](#11-quick-and-easy-setup-without-following-this-full-guide)
+  - [1.2. Submodules and notes for cloning this repo](#12-submodules-and-notes-for-cloning-this-repo)
+    - [1.2.1. Updating submodules to latest](#121-updating-submodules-to-latest)
 - [2. Install/configure the essentials](#2-installconfigure-the-essentials)
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
+  - [2.3. Meld](#23-meld)
+  - [2.4. Sensors](#24-sensors)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -14,7 +17,20 @@
   - [3.5. i3blocks](#35-i3blocks)
     - [3.5.1. Installing i3blocks](#351-installing-i3blocks)
     - [3.5.2. i3blocks contrib](#352-i3blocks-contrib)
-    - [3.5.3. i3block: Bandwidth](#353-i3block-bandwidth)
+    - [3.5.3. i3block: apt-upgrades](#353-i3block-apt-upgrades)
+    - [3.5.4. i3block: Bandwidth](#354-i3block-bandwidth)
+    - [3.5.5. i3block: Volume control](#355-i3block-volume-control)
+    - [3.5.6. i3block: memory](#356-i3block-memory)
+    - [3.5.7. i3block: disk](#357-i3block-disk)
+    - [i3block: cpu and hdd temperature](#i3block-cpu-and-hdd-temperature)
+    - [i3block: wifi](#i3block-wifi)
+    - [i3block: cpu_usage](#i3block-cpu_usage)
+    - [i3block: load_average](#i3block-load_average)
+    - [i3block: gpu-load](#i3block-gpu-load)
+    - [i3block: timer_and_stopwatch](#i3block-timer_and_stopwatch)
+    - [i3block: keyindicator](#i3block-keyindicator)
+    - [i3block: shutdown_menu](#i3block-shutdown_menu)
+  - [3.6. Copy modified i3 config file to ~/.config/i3/](#36-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
@@ -28,7 +44,14 @@
 
 This repo contains notes for myself for setting up my computers.
 
-## 1.1. Submodules and notes for cloning this repo
+## 1.1. Quick and easy setup without following this full guide
+
+This repo contains a shell script to set everything up easily without having to follow this full readme. Use `bash quick-setup.sh` to do a quick and easy setup. **THIS SETUP SCRIPT IS STILL UNDER CONSTRUCTION**
+
+However, it's recommended to go through the full readme. Especially if you want to have the latest scripts (eg: i3blocks-contrib)
+
+
+## 1.2. Submodules and notes for cloning this repo
 
 This repo contains some submodules. Hence there are multiple ways to clone this repo depending on what you want. ([More info about submodules can be found here](https://git-scm.com/book/en/v2/Git-Tools-Submodules))
 
@@ -44,7 +67,7 @@ cd ~
 git clone --recurse-submodules git@github.com:isuruwg/pc-setup.git
 ```
 
-### 1.1.1. Updating submodules to latest
+### 1.2.1. Updating submodules to latest
 
 By default, the above commands only get the submodule versions that were used in the last commit of this repo.
 You can check what's changed in the submodule in the remote by doing `git fetch` followed by a `git merge` to merge the upstream branch to update the local files (from within the submodule folder).
@@ -55,7 +78,7 @@ If you get an error saying `HEAD` is detached in submodule, please do `git check
 
 # 2. Install/configure the essentials
 
-## 2.1. Enable firewall
+## 2.1. Enable firewall 
 
 Install [ufw](https://help.ubuntu.com/community/UFW) if it's not already installed by doing `sudo apt install ufw`. This usually comes pre-installed with Ubuntu distributions. Then enable ufw as follows:
 
@@ -82,6 +105,21 @@ If you did enable any connections into your pc, please also consider installing 
 
 ```bash
 sudo apt install git
+```
+
+## 2.3. Meld
+
+```bash
+sudo apt install meld
+```
+
+## 2.4. Sensors
+
+```bash
+sudo apt install lm-sensors 
+sudo sensors-detect
+# Selected yes to everything
+sensors
 ```
 
 # 3. Install i3
@@ -180,7 +218,6 @@ make
 sudo make install
 ```
 
-
 ### 3.5.2. i3blocks contrib
 
 I've added i3blocks-contrib as a submodule to this repo.
@@ -189,12 +226,155 @@ I've added i3blocks-contrib as a submodule to this repo.
 git submodule add https://github.com/vivien/i3blocks-contrib.git
 ```
 
-### 3.5.3. i3block: Bandwidth
+You can check the differences between the i3blocks-config scripts in my repo vs the ones from the original repo by doing:
 
 ```bash
-cd i3blocks-contrib/bandwidth2
+meld i3/my-i3blocks/<SCRIPT-NAME> i3blocks-contrib/<SCRIPT-FOLDER-NAME>/<SCRIPT-NAME>
+```
+
+The corresponding commands to quickly check differences in the modules I've used are as follows:
+
+```bash
+# apt-upgrades
+meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
+
+# bandwidth (folder compare)
+meld i3/my-i3blocks/bandwidth2-source/ i3blocks-contrib/bandwidth2/
+
+#volume
+meld i3/my-i3blocks/volume i3blocks-contrib/volume/volume
+
+#memory
+meld i3/my-i3blocks/memory i3blocks-contrib/memory/memory 
+
+#disk
+meld i3/my-i3blocks/disk i3blocks-contrib/disk/disk 
+
+#gradient-temp
+meld i3/my-i3blocks/gradient-temp i3blocks-gradient-temp/gradient-temp 
+
+# wifi
+
+# cpu usage
+
+# load_average
+
+# gpu-load
+
+# timer_and_stopwatch
+
+# keyindicator
+
+# shutdown_menu
+
+
+```
+
+### 3.5.3. i3block: apt-upgrades
+
+NOTE: I have changed this script and renamed it to [i3/my-i3blocks/checkupdates](i3/my-i3blocks/checkupdates). So check with meld and include any new changes from the i3blocks-contrib repo as necessary.
+
+```bash
+meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
+```
+
+### 3.5.4. i3block: Bandwidth
+
+```bash
+# Copy source
+cp i3blocks-contrib/bandwidth2/* i3/my-i3blocks/bandwidth2-source/
+cd i3/my-i3blocks/bandwidth2-source/
 make
-mv bandwidth2 ../../i3/my-i3blocks/
+mv bandwidth2 ..
+```
+
+### 3.5.5. i3block: Volume control
+
+```bash
+cp i3blocks-contrib/volume/volume i3/my-i3blocks/
+```
+
+### 3.5.6. i3block: memory
+
+```bash
+cp i3blocks-contrib/memory/memory i3/my-i3blocks/
+```
+
+### 3.5.7. i3block: disk
+
+```bash
+cp i3blocks-contrib/disk/disk i3/my-i3blocks/
+```
+
+### i3block: cpu and hdd temperature
+
+I've added a nicer gradient temperature script from [here](https://github.com/hastinbe/i3blocks-gradient-temp) instead of the default temperature script.
+
+
+```bash
+# Does not need to be done again. This is just the command I used to add the submodule.
+git submodule add https://github.com/hastinbe/i3blocks-gradient-temp
+```
+
+```bash
+cp i3blocks-gradient-temp/gradient-temp i3/my-i3blocks
+```
+
+### i3block: wifi
+
+```bash
+cp i3blocks-contrib/wifi/wifi i3/my-i3blocks
+```
+
+### i3block: cpu_usage
+
+```bash
+cp i3blocks-contrib/cpu_usage/cpu_usage i3/my-i3blocks
+```
+
+### i3block: load_average
+
+```bash
+cp i3blocks-contrib/load_average/load_average i3/my-i3blocks
+```
+
+### i3block: gpu-load
+
+```bash
+cp i3blocks-contrib/gpu-load/gpu-load i3/my-i3blocks
+```
+
+### i3block: timer_and_stopwatch
+
+```bash
+cp i3blocks-contrib/timer_and_stopwatch/timer_and_stopwatch i3/my-i3blocks
+```
+
+### i3block: keyindicator
+
+```bash
+cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
+```
+
+### i3block: shutdown_menu
+
+```bash
+cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
+```
+
+
+## 3.6. Copy modified i3 config file to ~/.config/i3/
+
+Check the differences between your default config file and the config file available in your new i3 installation
+
+```bash
+meld ~/.config/i3/config i3/config
+```
+
+Copy the config file:
+
+```bash
+cp i3/config ~/.config/i3/
 ```
 
 # 4. Install other everyday programs
