@@ -9,7 +9,7 @@
   - [2.2. Git](#22-git)
   - [2.3. Meld](#23-meld)
   - [2.4. Sensors](#24-sensors)
-  - [xautolock](#xautolock)
+  - [2.5. xautolock](#25-xautolock)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -123,7 +123,7 @@ sudo sensors-detect
 sensors
 ```
 
-## xautolock
+## 2.5. xautolock
 
 xautolock is required for automatically locking the screen with i3. If you are not using i3, this is not needed
 
