@@ -253,10 +253,10 @@ bindsym $mod+x exec i3-msg move workspace to output right
 
 # Screen lock (windows key + l), black color
 # bindsym Mod4+l exec i3lock -c 000000
-##########################bindsym Mod4+l exec "~/scripts/i3scripts/autolock.sh"
-##########################bindsym Mod4+k exec "~/scripts/i3scripts/lock_and_turn_off_screen.sh"
+bindsym Mod4+l exec "~/pc-setup/i3/autolock.sh"
+bindsym Mod4+k exec "~/pc-setup/i3/lock_and_turn_off_screen.sh"
 # corners order: top left, top right, bottom left, bottom right
-###################################exec xautolock -corners --00 -time 8 -locker '~/scripts/i3scripts/autolock.sh' -notify 30 -notifier "notify-send -u critical -t 10000 -- 'Locking screen in 30 seconds'"  &
+exec xautolock -corners --00 -time 8 -locker '~/pc-setup/i3/autolock.sh' -notify 30 -notifier "notify-send -u critical -t 10000 -- 'Locking screen in 30 seconds'"  &
 
 # Make the currently focused window a scratchpad
 bindsym $mod+Shift+minus move scratchpad
