@@ -19,3 +19,10 @@ echo "deb http://debian.sur5r.net/i3/ $(grep '^DISTRIB_CODENAME=' /etc/lsb-relea
 exit
 sudo apt update
 sudo apt install i3
+
+
+# Copy configuration files and setup permissions
+sudo chmod +x ~/pc-setup/i3/autolock.sh 
+sudo chmod +x ~/pc-setup/i3/lock_and_turn_off_screen.sh
+
+cp i3/config ~/.config/i3/
