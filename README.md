@@ -17,7 +17,7 @@
   - [3.4. Audio control](#34-audio-control)
   - [3.5. Screen resolution and display control](#35-screen-resolution-and-display-control)
     - [3.5.1. xrandr](#351-xrandr)
-    - [3.5.2. arandr](#352-arandr)
+    - [3.5.2. arandr (Optional)](#352-arandr-optional)
   - [3.6. i3blocks](#36-i3blocks)
     - [3.6.1. Installing i3blocks](#361-installing-i3blocks)
     - [3.6.2. i3blocks contrib](#362-i3blocks-contrib)
@@ -221,9 +221,11 @@ Following are some scripts I use for configuration:
 3. TV only  
     `xrandr --output DP-3 --mode 3840x2160 --right-of DP-0 --scale 0.5x0.5 --output HDMI-0 --off --output DP-0 --off`
 
-### 3.5.2. arandr
+I've added these scripts to the [i3/my-i3blocks/shutdown_menu](i3/my-i3blocks/shutdown_menu) file as options for quickly switching between them.
 
-Install arandr by doing `sudo apt install arandr`
+### 3.5.2. arandr (Optional)
+
+Install arandr (if you need a gui to control screens) by doing `sudo apt install arandr`
 
 ## 3.6. i3blocks
 
