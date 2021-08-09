@@ -34,7 +34,9 @@
     - [3.6.13. i3block: timer_and_stopwatch](#3613-i3block-timer_and_stopwatch)
     - [3.6.14. i3block: keyindicator](#3614-i3block-keyindicator)
     - [3.6.15. i3block: shutdown_menu](#3615-i3block-shutdown_menu)
-  - [3.7. Copy modified i3 config file to ~/.config/i3/](#37-copy-modified-i3-config-file-to-configi3)
+  - [3.7. Get programs to start automatically](#37-get-programs-to-start-automatically)
+    - [Dropbox](#dropbox)
+  - [3.8. Copy modified i3 config file to ~/.config/i3/](#38-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
@@ -397,8 +399,18 @@ cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
 cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
 ```
 
+## 3.7. Get programs to start automatically
 
-## 3.7. Copy modified i3 config file to ~/.config/i3/
+### Dropbox
+
+Add the following to your `~/.config/i3/`
+
+```bash
+# Get Dropbox to start
+exec --no-startup-id dropbox start
+```
+
+## 3.8. Copy modified i3 config file to ~/.config/i3/
 
 Check the differences between your default config file and the config file available in your new i3 installation
 
