@@ -234,7 +234,7 @@ bindsym --release Num_Lock  exec pkill -SIGRTMIN+11 i3blocks
 
 # Start firefox
 # assign [class="Firefox"] $workspace7
-exec --no-startup-id i3-msg 'workspace $workspace7; firefox'
+exec --no-startup-id i3-msg 'workspace $workspace7; exec firefox'
 # exec firefox 
 
 # Assign vs code to workspace 4
