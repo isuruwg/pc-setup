@@ -10,6 +10,7 @@
   - [2.3. Meld](#23-meld)
   - [2.4. Sensors](#24-sensors)
   - [2.5. xautolock](#25-xautolock)
+  - [Aptitude](#aptitude)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -134,6 +135,14 @@ xautolock is required for automatically locking the screen with i3. If you are n
 
 ```bash
 sudo apt install xautolock
+```
+
+## Aptitude
+
+Aptitude is not required to be install as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
+
+```bash
+sudo apt install aptitude
 ```
 
 # 3. Install i3
@@ -304,8 +313,9 @@ meld i3/my-i3blocks/gradient-temp i3blocks-gradient-temp/gradient-temp
 
 # shutdown_menu
 
-
 ```
+
+**IMPORTANT: Please make sure that you give the scripts permission to run by doing `chmod +x <scriptname.sh>` for all the scripts you use.**
 
 ### 3.6.3. i3block: apt-upgrades
 
