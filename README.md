@@ -10,7 +10,9 @@
   - [2.3. Meld](#23-meld)
   - [2.4. Sensors](#24-sensors)
   - [2.5. xautolock](#25-xautolock)
-  - [Aptitude](#aptitude)
+  - [2.6. Aptitude](#26-aptitude)
+  - [2.7. tmux](#27-tmux)
+    - [2.7.1. Setup tmux](#271-setup-tmux)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -137,13 +139,49 @@ xautolock is required for automatically locking the screen with i3. If you are n
 sudo apt install xautolock
 ```
 
-## Aptitude
+## 2.6. Aptitude
 
 Aptitude is not required to be install as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
 
 ```bash
 sudo apt install aptitude
 ```
+
+## 2.7. tmux
+
+```bash
+sudo apt install tmux
+```
+
+### 2.7.1. Setup tmux
+
+```bash
+# create ~/.tmux.conf
+vi ~/.tmux.conf
+```
+
+Add the following to the `tmux.conf` file: 
+
+```conf
+# To enable mouse scroll in tmux pane
+set -g mouse on
+
+# Improve colors
+set -g default-terminal 'screen-256color'
+
+# Set scrollback buffer to 10000
+set -g history-limit 10000
+
+# Customize the status line
+set -g status-fg  green
+set -g status-bg  black
+
+# Change the default prefix from C-b to C-z
+# set -g prefix C-z
+# unbind C-b
+```
+
+
 
 # 3. Install i3
 
