@@ -43,6 +43,7 @@
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VSCode](#42-vscode)
+    - [4.2.1. VSCode plugins](#421-vscode-plugins)
   - [4.3. VLC](#43-vlc)
   - [4.4. gnucash](#44-gnucash)
   - [4.5. Install chromium](#45-install-chromium)
@@ -513,6 +514,11 @@ Other useful fail2ban commands
 ```bash
 sudo snap install --classic code
 ```
+
+### 4.2.1. VSCode plugins
+
+1. [Markdown emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji)
+2. [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 
 ## 4.3. VLC
 
