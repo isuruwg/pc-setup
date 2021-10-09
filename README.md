@@ -4,6 +4,7 @@
   - [1.1. Quick and easy setup without following this full guide](#11-quick-and-easy-setup-without-following-this-full-guide)
   - [1.2. Submodules and notes for cloning this repo](#12-submodules-and-notes-for-cloning-this-repo)
     - [1.2.1. Updating submodules to latest](#121-updating-submodules-to-latest)
+    - [Adding new submodules](#adding-new-submodules)
 - [2. Install/configure the essentials](#2-installconfigure-the-essentials)
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
@@ -13,6 +14,7 @@
   - [2.6. Aptitude](#26-aptitude)
   - [2.7. tmux](#27-tmux)
     - [2.7.1. Setup tmux](#271-setup-tmux)
+  - [Python](#python)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -47,6 +49,7 @@
   - [4.3. VLC](#43-vlc)
   - [4.4. gnucash](#44-gnucash)
   - [4.5. Install chromium](#45-install-chromium)
+  - [4.6. 7-zip](#46-7-zip)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -82,9 +85,19 @@ git clone --recurse-submodules git@github.com:isuruwg/pc-setup.git
 By default, the above commands only get the submodule versions that were used in the last commit of this repo.
 You can check what's changed in the submodule in the remote by doing `git fetch` followed by a `git merge` to merge the upstream branch to update the local files (from within the submodule folder).
 
+You can manually check what's changed by doing `git fetch` followed by `git difftool origin`
+
 If you just want to get updates from the submodules, overwrite what's in local to use the latest version, you can do `git submodule update --remote`
 
 If you get an error saying `HEAD` is detached in submodule, please do `git checkout master` (The main branch of both i3blocks and i3blocks-contrib is called `master`) in the submodule folder.
+
+### Adding new submodules
+
+You can add new submodules to this repo by doing: 
+
+```bash
+git submodule add https://github.com/link/to/submodule
+```
 
 # 2. Install/configure the essentials
 
@@ -181,6 +194,9 @@ set -g status-bg  black
 # set -g prefix C-z
 # unbind C-b
 ```
+
+## Python
+
 
 
 
@@ -538,6 +554,12 @@ sudo apt install gnucash
 
 ```bash
 sudo snap install chromium
+```
+
+## 4.6. 7-zip
+
+```bash
+sudo apt install p7zip-full
 ```
 
 # 5. Troubleshooting
