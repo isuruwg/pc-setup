@@ -4,7 +4,7 @@
   - [1.1. Quick and easy setup without following this full guide](#11-quick-and-easy-setup-without-following-this-full-guide)
   - [1.2. Submodules and notes for cloning this repo](#12-submodules-and-notes-for-cloning-this-repo)
     - [1.2.1. Updating submodules to latest](#121-updating-submodules-to-latest)
-    - [Adding new submodules](#adding-new-submodules)
+    - [1.2.2. Adding new submodules](#122-adding-new-submodules)
 - [2. Install/configure the essentials](#2-installconfigure-the-essentials)
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
@@ -14,7 +14,7 @@
   - [2.6. Aptitude](#26-aptitude)
   - [2.7. tmux](#27-tmux)
     - [2.7.1. Setup tmux](#271-setup-tmux)
-  - [Python](#python)
+  - [2.8. Python](#28-python)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -85,13 +85,13 @@ git clone --recurse-submodules git@github.com:isuruwg/pc-setup.git
 By default, the above commands only get the submodule versions that were used in the last commit of this repo.
 You can check what's changed in the submodule in the remote by doing `git fetch` followed by a `git merge` to merge the upstream branch to update the local files (from within the submodule folder).
 
-You can manually check what's changed by doing `git fetch` followed by `git difftool origin`
+You can manually check what's changed by doing `git fetch` followed by `git difftool origin`.
 
 If you just want to get updates from the submodules, overwrite what's in local to use the latest version, you can do `git submodule update --remote`
 
 If you get an error saying `HEAD` is detached in submodule, please do `git checkout master` (The main branch of both i3blocks and i3blocks-contrib is called `master`) in the submodule folder.
 
-### Adding new submodules
+### 1.2.2. Adding new submodules
 
 You can add new submodules to this repo by doing: 
 
@@ -195,8 +195,34 @@ set -g status-bg  black
 # unbind C-b
 ```
 
-## Python
+## 2.8. Python
 
+[Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
+
+Pyenv has been added to this repo as a submodule.
+
+Follow the instructions [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) to install the prerequisites.
+
+And then do the [basic github checkout method using the submodule here to install pyenv](https://github.com/pyenv/pyenv#basic-github-checkout). Following are the steps I followed:
+
+```bash
+cd ~/pc-setup/pyenv/
+src/configure && make -C src # Optional
+
+# the sed invocation inserts the lines at the start of the file
+# after any initial comment lines
+sed -Ei -e '/^([^#]|$)/ {a \
+export PYENV_ROOT="$HOME/pc-setup/pyenv"
+a \
+export PATH="$PYENV_ROOT/bin:$PATH"
+a \
+' -e ':a' -e '$!{n;ba};}' ~/.profile
+echo 'eval "$(pyenv init --path)"' >>~/.profile
+
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+```
+
+(You might need to log out and log back in after)
 
 
 
