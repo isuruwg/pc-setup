@@ -224,7 +224,21 @@ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
 
 (You might need to log out and log back in after)
 
+Do the following after installation to set up a python environment
 
+```bash
+pyenv install <version>
+# For example;
+pyenv install 3.9.7 
+
+# set up global python
+pyenv global 3.9.7
+
+# set local python version:
+# Navigate to a project folder and do 
+pyenv local 3.9.7
+
+```
 
 # 3. Install i3
 
