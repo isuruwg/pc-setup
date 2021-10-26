@@ -1,11 +1,13 @@
 sudo apt install ufw
 sudo ufw enable
 
+sudo apt install git
+sudo apt install meld
+
 cd ~
 git clone --recurse-submodules git@github.com:isuruwg/pc-setup.git
 
-sudo apt install git
-sudo apt install meld
+
 
 # Install i3
 /usr/lib/apt/apt-helper download-file https://debian.sur5r.net/i3/pool/main/s/sur5r-keyring/sur5r-keyring_2021.02.02_all.deb keyring.deb SHA256:cccfb1dd7d6b1b6a137bb96ea5b5eef18a0a4a6df1d6c0c37832025d2edaa710

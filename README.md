@@ -50,6 +50,11 @@
   - [4.4. gnucash](#44-gnucash)
   - [4.5. Install chromium](#45-install-chromium)
   - [4.6. 7-zip](#46-7-zip)
+  - [4.7. Set-up VirtualBox](#47-set-up-virtualbox)
+  - [4.8. Set-up Kubernetes](#48-set-up-kubernetes)
+    - [4.8.1. Method1: Using KIND](#481-method1-using-kind)
+    - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
+      - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -600,6 +605,68 @@ sudo snap install chromium
 
 ```bash
 sudo apt install p7zip-full
+```
+
+## 4.7. Set-up VirtualBox
+
+Reference: [official virtualbox documentation](https://www.virtualbox.org/wiki/Linux_Downloads)
+
+This is required for setting up Kubernetes using Vagrant and Ansible as described in the section below.  
+
+Add the source for deb package: The official guide tells to add this to `/etc/apt/sources.list`. But I added it to a separate file insied `etc/apt/sources.list.d/`
+
+```bash
+# The official guide tells to add the following with <mydist> replaced with distribution name to /etc/apt/sources.list
+# deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian <mydist> contrib
+
+# instead of the above I did the following: 
+
+sudo -i 
+echo "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $(grep '^DISTRIB_CODENAME=' /etc/lsb-release | cut -f2 -d=) contrib" >> /etc/apt/sources.list.d/virtualbox.list
+
+# Add the Oracle public key for apt
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+
+# Install virtualbox
+sudo apt install virtualbox-6.1
+```
+
+## 4.8. Set-up Kubernetes
+
+There are multiple ways to set-up K8S; 
+
+### 4.8.1. Method1: Using KIND
+
+Please refer to the notes [in this GitHub repo](https://github.com/isuruwg/ml-k8s-tutorial#21-installing-for-local-development)
+
+### 4.8.2. Method 2: Using Vagrant and Ansible
+
+Reference : [Install K8S with Vagrant and Ansible](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
+
+#### 4.8.2.1. Install Vagrant
+
+Ref: [vagrantup](https://www.vagrantup.com/downloads)
+
+```bash
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+sudo apt-get update && sudo apt-get install vagrant
+```
+
+Try a simple vagrant image:
+
+```bash
+vagrant init hashicorp/bionic64
+vagrant up
+vagrant ssh # ssh into the new machine
+
+#inside the vm: 
+logout # to log out from the vm
+
+# After logging out from the vm, in the host machine: 
+vagrant destroy
 ```
 
 # 5. Troubleshooting
