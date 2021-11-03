@@ -58,8 +58,6 @@
       - [4.8.2.2. Install Ansible](#4822-install-ansible)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
-- [Appendix](#appendix)
-  - [Python packages installed in this repo](#python-packages-installed-in-this-repo)
 
 # 1. Introduction
 
@@ -680,6 +678,9 @@ Ansible can be installed easily with pip. Let's first create a virtual environme
 (Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
 
 ```bash
+mkdir K8S
+cd K8S
+
 pyenv local 3.9.7
 
 #create and activate virtual environment
@@ -711,13 +712,3 @@ Following solution worked for me: [[Source](https://askubuntu.com/questions/4882
   ```bash
   sudo mount -o remount,rw /dev/mmcblk0p2
   ```
-
-# Appendix
-
-## Python packages installed in this repo
-
-This corresponds to which python packages were installed in this repo. This repo also contains a [requirements.txt](requirements.txt) file with all the versions of these packages used for the most recent setup.
-
-```bash
-pip install ansible
-```
