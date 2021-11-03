@@ -55,6 +55,7 @@
     - [4.8.1. Method1: Using KIND](#481-method1-using-kind)
     - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
       - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
+      - [4.8.2.2. Install Ansible](#4822-install-ansible)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -667,6 +668,18 @@ logout # to log out from the vm
 
 # After logging out from the vm, in the host machine: 
 vagrant destroy
+```
+
+#### 4.8.2.2. Install Ansible
+
+Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+
+Ansible can be installed easily with pip. Let's first create a virtual environment: 
+(Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
+
+```bash
+pyenv local 3.9.7
+
 ```
 
 # 5. Troubleshooting
