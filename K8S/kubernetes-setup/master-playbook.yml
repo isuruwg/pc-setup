@@ -67,7 +67,9 @@
 
   - name: Adding apt repository for Kubernetes
     apt_repository:
-      repo: deb https://apt.kubernetes.io/ kubernetes-{{ ansible_distribution_release }} main
+      # repo: deb https://apt.kubernetes.io/ kubernetes-{{ ansible_distribution_release }} main
+      # IG : WARNING AT the time of creating this, only xenial repo was available. So the above automatic command didn't work for focal (20.04)
+      repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
       state: present
       filename: kubernetes.list
 

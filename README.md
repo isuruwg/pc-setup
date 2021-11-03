@@ -56,6 +56,7 @@
     - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
       - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
       - [4.8.2.2. Install Ansible](#4822-install-ansible)
+      - [4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4823-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -693,6 +694,17 @@ pip install ansible
 # Create and save requirements.txt file
 pip freeze > requirements.txt
 ```
+
+#### 4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
+
+I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.168.56.0/21.
+
+```bash
+cd K8S
+vagrant up
+```
+
+
 
 # 5. Troubleshooting
 
