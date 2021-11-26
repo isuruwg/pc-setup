@@ -697,7 +697,7 @@ pip freeze > requirements.txt
 
 #### 4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
-I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.168.56.0/21.
+I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.**168**.56.0/21.
 
 **Note:** TODO##### Write about the kubernetes repos using xenial apt repos instead of dist specific. Figure out if an if failed try xenial line to ansible playbooks for both master and node#######################################################
 
@@ -705,8 +705,6 @@ I had to change the IP ranges used in the reference document as Virtualbox > 6.1
 cd K8S
 vagrant up
 ```
-
-
 
 # 5. Troubleshooting
 
