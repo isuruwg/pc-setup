@@ -706,6 +706,10 @@ cd K8S
 vagrant up
 ```
 
+I got an error with `join-command` file not available. I fixed this by doing, `cd K8S/kubernetes-setup/` then `touch join-command`
+
+You might also get an error the first time on the `TASK [Initialize the Kubernetes cluster using kubeadm]` step when you you run `vagrant up`, try running it a second time if this happens.
+
 # 5. Troubleshooting
 
 ## 5.1. SD card mounts as read only on Ubuntu
