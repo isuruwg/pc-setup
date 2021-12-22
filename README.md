@@ -234,8 +234,7 @@ Ansible can be installed easily with pip. Let's first create a virtual environme
 (Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
 
 ```bash
-mkdir K8S
-cd K8S
+cd ansible
 
 pyenv local 3.10.1
 
@@ -716,6 +715,23 @@ vagrant destroy
 #### 4.7.2.2. Install Ansible
 
 Please refer to the [section on installing the essentials](#2-installconfigure-the-essentials) above to install Ansible if you haven't already done so.
+
+```bash
+mkdir K8S
+cd K8S
+
+pyenv local 3.10.1
+
+#create and activate virtual environment
+python -m venv venv
+. ./venv/bin/activate
+
+# install Ansible
+pip install ansible
+
+# Create and save requirements.txt file
+pip freeze > requirements.txt
+```
 
 #### 4.7.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
