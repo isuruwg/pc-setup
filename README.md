@@ -9,12 +9,16 @@
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
   - [2.3. Meld](#23-meld)
-  - [2.4. Sensors](#24-sensors)
-  - [2.5. xautolock](#25-xautolock)
-  - [2.6. Aptitude](#26-aptitude)
-  - [2.7. tmux](#27-tmux)
-    - [2.7.1. Setup tmux](#271-setup-tmux)
-  - [2.8. Python](#28-python)
+  - [2.4. VSCode](#24-vscode)
+    - [2.4.1. My preferred settings](#241-my-preferred-settings)
+    - [2.4.2. VSCode plugins](#242-vscode-plugins)
+  - [2.5. Sensors](#25-sensors)
+  - [2.6. Python](#26-python)
+  - [2.7. Install Ansible](#27-install-ansible)
+  - [2.8. xautolock](#28-xautolock)
+  - [2.9. Aptitude](#29-aptitude)
+  - [2.10. tmux](#210-tmux)
+    - [2.10.1. Setup tmux](#2101-setup-tmux)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -44,19 +48,17 @@
   - [3.8. Copy modified i3 config file to ~/.config/i3/](#38-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
-  - [4.2. VSCode](#42-vscode)
-    - [4.2.1. VSCode plugins](#421-vscode-plugins)
-  - [4.3. VLC](#43-vlc)
-  - [4.4. gnucash](#44-gnucash)
-  - [4.5. Install chromium](#45-install-chromium)
-  - [4.6. 7-zip](#46-7-zip)
-  - [4.7. Set-up VirtualBox](#47-set-up-virtualbox)
-  - [4.8. Set-up Kubernetes](#48-set-up-kubernetes)
-    - [4.8.1. Method1: Using KIND](#481-method1-using-kind)
-    - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
-      - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
-      - [4.8.2.2. Install Ansible](#4822-install-ansible)
-      - [4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4823-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
+  - [4.2. VLC](#42-vlc)
+  - [4.3. gnucash](#43-gnucash)
+  - [4.4. Install chromium](#44-install-chromium)
+  - [4.5. 7-zip](#45-7-zip)
+  - [4.6. Set-up VirtualBox](#46-set-up-virtualbox)
+  - [4.7. Set-up Kubernetes](#47-set-up-kubernetes)
+    - [4.7.1. Method1: Using KIND](#471-method1-using-kind)
+    - [4.7.2. Method 2: Using Vagrant and Ansible](#472-method-2-using-vagrant-and-ansible)
+      - [4.7.2.1. Install Vagrant](#4721-install-vagrant)
+      - [4.7.2.2. Install Ansible](#4722-install-ansible)
+      - [4.7.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4723-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -143,16 +145,112 @@ sudo apt install git
 sudo apt install meld
 ```
 
-## 2.4. Sensors
+## 2.4. VSCode
+
+[REF](https://code.visualstudio.com/docs/setup/linux)
+
+```bash
+sudo snap install --classic code
+```
+
+### 2.4.1. My preferred settings
+
+Color theme: Monokai
+
+Editor Font size: 16
+
+### 2.4.2. VSCode plugins
+
+1. [Markdown emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji)
+2. [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+
+## 2.5. Sensors
 
 ```bash
 sudo apt install lm-sensors 
 sudo sensors-detect
 # Selected yes to everything
-sensors
+watch -d sensors
+# or just do, "sensors" to view temperature once. 
 ```
 
-## 2.5. xautolock
+## 2.6. Python
+
+[Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
+
+Pyenv has been added to this repo as a submodule.
+
+Follow the instructions [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) to install the prerequisites.
+
+And then do the [basic github checkout method using the submodule here to install pyenv](https://github.com/pyenv/pyenv#basic-github-checkout). Following are the steps I followed:
+
+```bash
+cd ~/pc-setup/pyenv/
+
+# OPTIONAL: Fetch the latest version from remote
+git fetch
+git difftool origin
+# Or do "git merge" to get all the updates automatically.
+
+src/configure && make -C src # Optional
+
+# the sed invocation inserts the lines at the start of the file
+# after any initial comment lines
+sed -Ei -e '/^([^#]|$)/ {a \
+export PYENV_ROOT="$HOME/pc-setup/pyenv"
+a \
+export PATH="$PYENV_ROOT/bin:$PATH"
+a \
+' -e ':a' -e '$!{n;ba};}' ~/.profile
+echo 'eval "$(pyenv init --path)"' >>~/.profile
+
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+```
+
+(You might need to log out and log back in after)
+
+Do the following after installation to set up a python environment
+
+```bash
+# List all available Python versions
+pyenv install --list
+pyenv install <version>
+# For example;
+pyenv install 3.10.1 
+
+# set up global python
+pyenv global 3.10.1
+
+# set local python version:
+# Navigate to a project folder and do 
+pyenv local 3.10.1
+```
+
+## 2.7. Install Ansible
+
+Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+
+Ansible can be installed easily with pip. Let's first create a virtual environment: 
+(Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
+
+```bash
+mkdir K8S
+cd K8S
+
+pyenv local 3.10.1
+
+#create and activate virtual environment
+python -m venv venv
+. ./venv/bin/activate
+
+# install Ansible
+pip install ansible
+
+# Create and save requirements.txt file
+pip freeze > requirements.txt
+```
+
+## 2.8. xautolock
 
 xautolock is required for automatically locking the screen with i3. If you are not using i3, this is not needed
 
@@ -160,7 +258,7 @@ xautolock is required for automatically locking the screen with i3. If you are n
 sudo apt install xautolock
 ```
 
-## 2.6. Aptitude
+## 2.9. Aptitude
 
 Aptitude is not required to be install as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
 
@@ -168,13 +266,13 @@ Aptitude is not required to be install as Ubuntu already comes with apt and apt-
 sudo apt install aptitude
 ```
 
-## 2.7. tmux
+## 2.10. tmux
 
 ```bash
 sudo apt install tmux
 ```
 
-### 2.7.1. Setup tmux
+### 2.10.1. Setup tmux
 
 ```bash
 # create ~/.tmux.conf
@@ -202,50 +300,7 @@ set -g status-bg  black
 # unbind C-b
 ```
 
-## 2.8. Python
 
-[Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
-
-Pyenv has been added to this repo as a submodule.
-
-Follow the instructions [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) to install the prerequisites.
-
-And then do the [basic github checkout method using the submodule here to install pyenv](https://github.com/pyenv/pyenv#basic-github-checkout). Following are the steps I followed:
-
-```bash
-cd ~/pc-setup/pyenv/
-src/configure && make -C src # Optional
-
-# the sed invocation inserts the lines at the start of the file
-# after any initial comment lines
-sed -Ei -e '/^([^#]|$)/ {a \
-export PYENV_ROOT="$HOME/pc-setup/pyenv"
-a \
-export PATH="$PYENV_ROOT/bin:$PATH"
-a \
-' -e ':a' -e '$!{n;ba};}' ~/.profile
-echo 'eval "$(pyenv init --path)"' >>~/.profile
-
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-```
-
-(You might need to log out and log back in after)
-
-Do the following after installation to set up a python environment
-
-```bash
-pyenv install <version>
-# For example;
-pyenv install 3.9.7 
-
-# set up global python
-pyenv global 3.9.7
-
-# set local python version:
-# Navigate to a project folder and do 
-pyenv local 3.9.7
-
-```
 
 # 3. Install i3
 
@@ -570,20 +625,7 @@ Other useful fail2ban commands
 
 [OPTIONAL] : You can also make fail2ban and ufw work together better by following [this](https://askubuntu.com/questions/54771/potential-ufw-and-fail2ban-conflicts)
 
-## 4.2. VSCode
-
-[REF](https://code.visualstudio.com/docs/setup/linux)
-
-```bash
-sudo snap install --classic code
-```
-
-### 4.2.1. VSCode plugins
-
-1. [Markdown emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji)
-2. [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
-
-## 4.3. VLC
+## 4.2. VLC
 
 [REF](https://www.videolan.org/vlc/download-ubuntu.html)
 
@@ -591,25 +633,25 @@ sudo snap install --classic code
 sudo snap install vlc
 ```
 
-## 4.4. gnucash
+## 4.3. gnucash
 
 ```
 sudo apt install gnucash
 ```
 
-## 4.5. Install chromium
+## 4.4. Install chromium
 
 ```bash
 sudo snap install chromium
 ```
 
-## 4.6. 7-zip
+## 4.5. 7-zip
 
 ```bash
 sudo apt install p7zip-full
 ```
 
-## 4.7. Set-up VirtualBox
+## 4.6. Set-up VirtualBox
 
 Reference: [official virtualbox documentation](https://www.virtualbox.org/wiki/Linux_Downloads)
 
@@ -633,19 +675,19 @@ wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-
 sudo apt install virtualbox-6.1
 ```
 
-## 4.8. Set-up Kubernetes
+## 4.7. Set-up Kubernetes
 
 There are multiple ways to set-up K8S; 
 
-### 4.8.1. Method1: Using KIND
+### 4.7.1. Method1: Using KIND
 
 Please refer to the notes [in this GitHub repo](https://github.com/isuruwg/ml-k8s-tutorial#21-installing-for-local-development)
 
-### 4.8.2. Method 2: Using Vagrant and Ansible
+### 4.7.2. Method 2: Using Vagrant and Ansible
 
 Reference : [Install K8S with Vagrant and Ansible](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
 
-#### 4.8.2.1. Install Vagrant
+#### 4.7.2.1. Install Vagrant
 
 Ref: [vagrantup](https://www.vagrantup.com/downloads)
 
@@ -671,31 +713,11 @@ logout # to log out from the vm
 vagrant destroy
 ```
 
-#### 4.8.2.2. Install Ansible
+#### 4.7.2.2. Install Ansible
 
-Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+Please refer to the [section on installing the essentials](#2-installconfigure-the-essentials) above to install Ansible if you haven't already done so.
 
-Ansible can be installed easily with pip. Let's first create a virtual environment: 
-(Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
-
-```bash
-mkdir K8S
-cd K8S
-
-pyenv local 3.9.7
-
-#create and activate virtual environment
-python -m venv venv
-. ./venv/bin/activate
-
-# install Ansible
-pip install ansible
-
-# Create and save requirements.txt file
-pip freeze > requirements.txt
-```
-
-#### 4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
+#### 4.7.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
 I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.**168**.56.0/21.
 
