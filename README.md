@@ -51,12 +51,14 @@
   - [4.5. Install chromium](#45-install-chromium)
   - [4.6. 7-zip](#46-7-zip)
   - [4.7. Set-up VirtualBox](#47-set-up-virtualbox)
-  - [4.8. Set-up Kubernetes](#48-set-up-kubernetes)
-    - [4.8.1. Method1: Using KIND](#481-method1-using-kind)
-    - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
-      - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
-      - [4.8.2.2. Install Ansible](#4822-install-ansible)
-      - [4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4823-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
+  - [4.8. Install Docker](#48-install-docker)
+  - [4.9. Set-up Kubernetes](#49-set-up-kubernetes)
+    - [4.9.1. Method1: Using KIND](#491-method1-using-kind)
+    - [4.9.2. Method 2: Using Vagrant and Ansible](#492-method-2-using-vagrant-and-ansible)
+      - [4.9.2.1. Install Vagrant](#4921-install-vagrant)
+      - [4.9.2.2. Install Ansible](#4922-install-ansible)
+      - [4.9.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4923-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
+    - [4.9.3. Method 3: Using K3D](#493-method-3-using-k3d)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -633,19 +635,21 @@ wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-
 sudo apt install virtualbox-6.1
 ```
 
-## 4.8. Set-up Kubernetes
+## 4.8. Install Docker
+
+## 4.9. Set-up Kubernetes
 
 There are multiple ways to set-up K8S; 
 
-### 4.8.1. Method1: Using KIND
+### 4.9.1. Method1: Using KIND
 
 Please refer to the notes [in this GitHub repo](https://github.com/isuruwg/ml-k8s-tutorial#21-installing-for-local-development)
 
-### 4.8.2. Method 2: Using Vagrant and Ansible
+### 4.9.2. Method 2: Using Vagrant and Ansible
 
 Reference : [Install K8S with Vagrant and Ansible](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
 
-#### 4.8.2.1. Install Vagrant
+#### 4.9.2.1. Install Vagrant
 
 Ref: [vagrantup](https://www.vagrantup.com/downloads)
 
@@ -671,7 +675,7 @@ logout # to log out from the vm
 vagrant destroy
 ```
 
-#### 4.8.2.2. Install Ansible
+#### 4.9.2.2. Install Ansible
 
 Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
 
@@ -695,7 +699,7 @@ pip install ansible
 pip freeze > requirements.txt
 ```
 
-#### 4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
+#### 4.9.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
 I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.**168**.56.0/21.
 
@@ -709,6 +713,21 @@ vagrant up
 I got an error with `join-command` file not available. I fixed this by doing, `cd K8S/kubernetes-setup/` then `touch join-command`
 
 You might also get an error the first time on the `TASK [Initialize the Kubernetes cluster using kubeadm]` step when you you run `vagrant up`, try running it a second time if this happens.
+
+Log in to the new machines:
+
+```bash
+## Accessing master
+vagrant ssh k8s-master
+
+## Accessing nodes
+vagrant ssh node-1
+vagrant ssh node-2
+```
+
+### 4.9.3. Method 3: Using K3D
+
+
 
 # 5. Troubleshooting
 
