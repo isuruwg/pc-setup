@@ -14,6 +14,8 @@
     - [2.4.2. VSCode plugins](#242-vscode-plugins)
   - [2.5. Sensors](#25-sensors)
   - [2.6. Python](#26-python)
+    - [2.6.1. Install pyenv](#261-install-pyenv)
+    - [2.6.2. Install Poetry [optional]](#262-install-poetry-optional)
   - [2.7. Install Ansible](#27-install-ansible)
   - [2.8. xautolock](#28-xautolock)
   - [2.9. Aptitude](#29-aptitude)
@@ -176,6 +178,8 @@ watch -d sensors
 
 ## 2.6. Python
 
+### 2.6.1. Install pyenv
+
 [Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
 
 Pyenv has been added to this repo as a submodule.
@@ -190,7 +194,7 @@ cd ~/pc-setup/pyenv/
 # OPTIONAL: Fetch the latest version from remote
 git fetch
 git difftool origin
-# Or do "git merge" to get all the updates automatically.
+# Or do "git merge" (or just git pull) to get all the updates automatically.
 
 src/configure && make -C src # Optional
 
@@ -225,6 +229,22 @@ pyenv global 3.10.1
 # Navigate to a project folder and do 
 pyenv local 3.10.1
 ```
+
+### 2.6.2. Install Poetry [optional]
+
+[[REF](https://github.com/python-poetry/poetry#installation)]
+
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Add $HOME/.local/bin to PATH using ~/.bashrc
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+
+# Open a new terminal and check if Poetry is installed properly
+poetry --version
+```
+
+If you would like to uninstall poetry, you can do so anytime by doing: `curl -sSL https://install.python-poetry.org | python3 - --uninstall`
 
 ## 2.7. Install Ansible
 

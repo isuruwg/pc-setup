@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "setup-using-ansible"
+version = "0.1.0"
+description = "Setup a computer using Ansible"
+authors = ["isuru <isuru@isuru.ca>"]
+license = "GNU GENERAL PUBLIC LICENSE Version 3"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+ansible = "^5.1.0"
+
+[tool.poetry.dev-dependencies]
+ansible = "^5.1.0"
+pre-commit = "^2.16.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

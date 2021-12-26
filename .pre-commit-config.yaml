@@ -1,0 +1,9 @@
+repos:
+- repo: local
+  hooks:
+  - id: update-requirements-txt
+    name: update-requirements-txt
+    description: 'Generate requirements.txt based on poetry.lock'
+    entry: bash -c 'cd setup-using-ansible && poetry export --without-hashes --format "requirements.txt" --output "requirements.txt"'
+    language: system
+    pass_filenames: false
