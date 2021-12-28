@@ -15,12 +15,13 @@
   - [2.5. Sensors](#25-sensors)
   - [2.6. Python](#26-python)
     - [2.6.1. Install pyenv](#261-install-pyenv)
-    - [2.6.2. Install Poetry [optional]](#262-install-poetry-optional)
+    - [2.6.2. Install Poetry](#262-install-poetry)
   - [2.7. Install Ansible](#27-install-ansible)
-  - [2.8. xautolock](#28-xautolock)
-  - [2.9. Aptitude](#29-aptitude)
-  - [2.10. tmux](#210-tmux)
-    - [2.10.1. Setup tmux](#2101-setup-tmux)
+  - [2.8. Setup pre-commit for git [optional]](#28-setup-pre-commit-for-git-optional)
+  - [2.9. xautolock](#29-xautolock)
+  - [2.10. Aptitude](#210-aptitude)
+  - [2.11. tmux](#211-tmux)
+    - [2.11.1. Setup tmux](#2111-setup-tmux)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -230,7 +231,7 @@ pyenv global 3.10.1
 pyenv local 3.10.1
 ```
 
-### 2.6.2. Install Poetry [optional]
+### 2.6.2. Install Poetry
 
 [[REF](https://github.com/python-poetry/poetry#installation)]
 
@@ -254,22 +255,20 @@ Ansible can be installed easily with pip. Let's first create a virtual environme
 (Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
 
 ```bash
-cd ansible
-
-pyenv local 3.10.1
-
-#create and activate virtual environment
-python -m venv venv
-. ./venv/bin/activate
-
-# install Ansible
-pip install ansible
-
-# Create and save requirements.txt file
-pip freeze > requirements.txt
+cd setup-using-ansible
+poetry install
 ```
 
-## 2.8. xautolock
+## 2.8. Setup pre-commit for git [optional]
+
+
+```bash
+cd setup-using-ansible
+poetry install --no-root
+pre-commit install
+```
+
+## 2.9. xautolock
 
 xautolock is required for automatically locking the screen with i3. If you are not using i3, this is not needed
 
@@ -277,7 +276,7 @@ xautolock is required for automatically locking the screen with i3. If you are n
 sudo apt install xautolock
 ```
 
-## 2.9. Aptitude
+## 2.10. Aptitude
 
 Aptitude is not required to be install as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
 
@@ -285,13 +284,13 @@ Aptitude is not required to be install as Ubuntu already comes with apt and apt-
 sudo apt install aptitude
 ```
 
-## 2.10. tmux
+## 2.11. tmux
 
 ```bash
 sudo apt install tmux
 ```
 
-### 2.10.1. Setup tmux
+### 2.11.1. Setup tmux
 
 ```bash
 # create ~/.tmux.conf

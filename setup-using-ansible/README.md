@@ -21,7 +21,7 @@ Please install Virtual-box and Vagrant as described in the [readme file](../READ
 
 ## Installing Ansible and setting up the Python environment
 
-There are two methods to do this, you can use the 
+
 
 
 
