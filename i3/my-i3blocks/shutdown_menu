@@ -38,7 +38,7 @@ BORDER_COLOR="${BORDER_COLOR:-#222222}"
 
 # Options not related to colors
 ROFI_TEXT="${ROFI_TEXT:-Menu:}"
-ROFI_OPTIONS=(${ROFI_OPTIONS:--width 11 -location 3 -hide-scrollbar -bw 2})
+ROFI_OPTIONS=(${ROFI_OPTIONS:--theme-str 'window {width: 11%; border: 2;} listview {scrollbar: false;}' -location 3})
 
 # Zenity options
 ZENITY_TITLE="${ZENITY_TITLE:-Menu}"
@@ -122,11 +122,17 @@ menu=(
   #[Lock]="${LOCKSCRIPT:-i3lock --color=${BG_COLOR#"#"}}"
   [Logout]="i3-msg exit"
   [Cancel]=""
-  [TV-4k-30]="xrandr --output DP-3 --mode 3840x2160 --right-of DP-0 --scale 0.5x0.5 --output HDMI-0 --off --output DP-0 --off"
-  [TV-1080-60]="xrandr --output DP-3 --mode 1920x1080 --right-of DP-0 --rate 60.00 --scale 1.0x1.0 --output HDMI-0 --off --output DP-0 --off"
-  [2DP]="xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --output DP-0 --mode 2560x1440 --output DP-3 --off"
-  [2DP-144]="xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --rate 144.00 --output DP-0 --mode 2560x1440 --output DP-3 --off"
-  [1DP]="xrandr --output HDMI-0 --off --output DP-0 --mode 2560x1440 --output DP-3 --off"
+
+  # Desktop
+  #[TV-4k-30]="xrandr --output DP-3 --mode 3840x2160 --right-of DP-0 --scale 0.5x0.5 --output HDMI-0 --off --output DP-0 --off"
+  #[TV-1080-60]="xrandr --output DP-3 --mode 1920x1080 --right-of DP-0 --rate 60.00 --scale 1.0x1.0 --output HDMI-0 --off --output DP-0 --off"
+  #[2DP]="xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --output DP-0 --mode 2560x1440 --output DP-3 --off"
+  #[2DP-144]="xrandr --output HDMI-0 --mode 1920x1080 --right-of DP-0 --rate 144.00 --output DP-0 --mode 2560x1440 --output DP-3 --off"
+  #[1DP]="xrandr --output HDMI-0 --off --output DP-0 --mode 2560x1440 --output DP-3 --off"
+
+  # New laptop
+  [1DP]="xrandr --output eDP --mode 1920x1080 --right-of HDMI-A-0 --output HDMI-A-0 --off"
+  [2DP]="xrandr --output eDP --mode 1920x1080 --right-of HDMI-A-0 --output HDMI-A-0 --mode 2560x1440"
 )
 menu_nrows=${#menu[@]}
 

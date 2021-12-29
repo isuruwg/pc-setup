@@ -16,6 +16,7 @@
   - [3.11. i3block: timer_and_stopwatch](#311-i3block-timer_and_stopwatch)
   - [3.12. i3block: keyindicator](#312-i3block-keyindicator)
   - [3.13. i3block: shutdown_menu](#313-i3block-shutdown_menu)
+  - [i3block: battery_bar](#i3block-battery_bar)
 
 # 1. Introduction and housekeeping
 
@@ -79,20 +80,31 @@ meld i3/my-i3blocks/disk i3blocks-contrib/disk/disk
 meld i3/my-i3blocks/gradient-temp i3blocks-gradient-temp/gradient-temp 
 
 # wifi
+meld i3/my-i3blocks/wifi i3blocks-contrib/wifi/wifi
 
 # cpu usage
+meld i3/my-i3blocks/cpu_usage i3blocks-contrib/cpu_usage/cpu_usage 
 
 # load_average
+meld i3/my-i3blocks/load_average i3blocks-contrib/load_average/load_average 
 
 # gpu-load
+meld i3/my-i3blocks/gpu-load i3blocks-contrib/gpu-load/gpu-load 
 
 # timer_and_stopwatch
+meld i3/my-i3blocks/timer_and_stopwatch i3blocks-contrib/timer_and_stopwatch/timer_and_stopwatch 
 
 # keyindicator
+meld i3/my-i3blocks/keyindicator i3blocks-contrib/keyindicator/keyindicator 
 
 # shutdown_menu
+meld i3/my-i3blocks/shutdown_menu i3blocks-contrib/shutdown_menu/shutdown_menu 
 
+# batterybar
+meld i3/my-i3blocks/batterybar i3blocks-contrib/batterybar/batterybar
 ```
+
+
 
 **IMPORTANT: Please make sure that you give the scripts permission to run by doing `chmod +x <scriptname.sh>` for all the scripts you use.**
 
@@ -155,6 +167,8 @@ cp i3blocks-contrib/wifi/wifi i3/my-i3blocks
 ## 3.8. i3block: cpu_usage
 
 ```bash
+sudo apt install sysstat
+
 cp i3blocks-contrib/cpu_usage/cpu_usage i3/my-i3blocks
 ```
 
@@ -186,4 +200,10 @@ cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
 
 ```bash
 cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
+```
+## i3block: battery_bar
+
+```bash
+sudo apt install acpi
+cp i3blocks-contrib/batterybar/batterybar i3/my-i3blocks
 ```
