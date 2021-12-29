@@ -30,22 +30,7 @@
   - [3.5. Screen resolution and display control](#35-screen-resolution-and-display-control)
     - [3.5.1. xrandr](#351-xrandr)
     - [3.5.2. arandr (Optional)](#352-arandr-optional)
-  - [3.6. i3blocks](#36-i3blocks)
-    - [3.6.1. Installing i3blocks](#361-installing-i3blocks)
-    - [3.6.2. i3blocks contrib](#362-i3blocks-contrib)
-    - [3.6.3. i3block: apt-upgrades](#363-i3block-apt-upgrades)
-    - [3.6.4. i3block: Bandwidth](#364-i3block-bandwidth)
-    - [3.6.5. i3block: Volume control](#365-i3block-volume-control)
-    - [3.6.6. i3block: memory](#366-i3block-memory)
-    - [3.6.7. i3block: disk](#367-i3block-disk)
-    - [3.6.8. i3block: cpu and hdd temperature](#368-i3block-cpu-and-hdd-temperature)
-    - [3.6.9. i3block: wifi](#369-i3block-wifi)
-    - [3.6.10. i3block: cpu_usage](#3610-i3block-cpu_usage)
-    - [3.6.11. i3block: load_average](#3611-i3block-load_average)
-    - [3.6.12. i3block: gpu-load](#3612-i3block-gpu-load)
-    - [3.6.13. i3block: timer_and_stopwatch](#3613-i3block-timer_and_stopwatch)
-    - [3.6.14. i3block: keyindicator](#3614-i3block-keyindicator)
-    - [3.6.15. i3block: shutdown_menu](#3615-i3block-shutdown_menu)
+  - [3.6. Status bar replacement](#36-status-bar-replacement)
   - [3.7. Get programs to start automatically](#37-get-programs-to-start-automatically)
     - [3.7.1. Dropbox](#371-dropbox)
   - [3.8. Copy modified i3 config file to ~/.config/i3/](#38-copy-modified-i3-config-file-to-configi3)
@@ -365,7 +350,7 @@ set -g status-bg  black
     mv Downloads/fontawesome-free-5.13.0-web/webfonts/fa-brands-400.ttf .fonts/
     mv Downloads/fontawesome-free-5.13.0-web/webfonts/fa-regular-400.ttf .fonts/
     ```
-  - You can use the [fontawesome cheatsheet](https://fontawesome.com/v5/cheatsheet) to copy icons
+  - You can use the [fontawesome cheatsheet](https://fontawesome.com/v5/cheatsheet) to copy icons that you want to use in config files.
 
 - Install Yosemite San Fransisco Font [[REF](https://youtu.be/ARKIwOlazKI?t=156)]
   - Download [YosemiteSanFranciscoFont](https://github.com/supermarin/YosemiteSanFranciscoFont) (Download the zip files from the [manual install section](https://github.com/supermarin/YosemiteSanFranciscoFont#manual-install).) 
@@ -407,182 +392,26 @@ Following are some scripts I use for configuration:
 3. TV only  
     `xrandr --output DP-3 --mode 3840x2160 --right-of DP-0 --scale 0.5x0.5 --output HDMI-0 --off --output DP-0 --off`
 
+4. Smaller laptop: Laptop screen only
+
+    `xrandr --output eDP --mode 1920x1080 --right-of HDMI-A-0 --output HDMI-A-0 --off`
+
+5. Smaller laptop: Laptop screen + hdmi (big screen)
+
+    `xrandr --output eDP --mode 1920x1080 --right-of HDMI-A-0 --output HDMI-A-0 --mode 2560x1440`
+
 I've added these scripts to the [i3/my-i3blocks/shutdown_menu](i3/my-i3blocks/shutdown_menu) file as options for quickly switching between them.
 
 ### 3.5.2. arandr (Optional)
 
 Install arandr (if you need a gui to control screens) by doing `sudo apt install arandr`
 
-## 3.6. i3blocks
+## 3.6. Status bar replacement
 
-i3blocks provides a better(subjective opinion) status bar than the i3bar that comes default with i3.
+There are many options for replacing the status bar. In this section we'll explore replacing the status bar with [i3blocks](https://github.com/vivien/i3blocks). More details about replacing the i3bar and i3status can be found [here](https://wiki.archlinux.org/title/i3#i3status)
 
-I've added the i3blocks git repo as a submodule to this repo by using the following:
-(More info about submodules can be found [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules))
+Please follow the steps in [i3blocks-setup.md](i3blocks-setup.md) to install and set up i3blocks
 
-```bash
-git submodule add https://github.com/vivien/i3blocks.git
-```
-
-### 3.6.1. Installing i3blocks
-
-Since the i3blocks included with Ubuntu apt is outdated, I installed it from source.
-[Ref](https://github.com/vivien/i3blocks#installation)
-
-```bash
-sudo apt install autoconf build-essential
-cd i3blocks
-./autogen.sh
-./configure
-make
-# IG: Had to use sudo here instead of just make install as the reference suggests
-sudo make install
-```
-
-### 3.6.2. i3blocks contrib
-
-I've added i3blocks-contrib as a submodule to this repo.
-
-```bash
-git submodule add https://github.com/vivien/i3blocks-contrib.git
-```
-
-You can check the differences between the i3blocks-config scripts in my repo vs the ones from the original repo by doing:
-
-```bash
-meld i3/my-i3blocks/<SCRIPT-NAME> i3blocks-contrib/<SCRIPT-FOLDER-NAME>/<SCRIPT-NAME>
-```
-
-The corresponding commands to quickly check differences in the modules I've used are as follows:
-
-```bash
-# apt-upgrades
-meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
-
-# bandwidth (folder compare)
-meld i3/my-i3blocks/bandwidth2-source/ i3blocks-contrib/bandwidth2/
-
-#volume
-meld i3/my-i3blocks/volume i3blocks-contrib/volume/volume
-
-#memory
-meld i3/my-i3blocks/memory i3blocks-contrib/memory/memory 
-
-#disk
-meld i3/my-i3blocks/disk i3blocks-contrib/disk/disk 
-
-#gradient-temp
-meld i3/my-i3blocks/gradient-temp i3blocks-gradient-temp/gradient-temp 
-
-# wifi
-
-# cpu usage
-
-# load_average
-
-# gpu-load
-
-# timer_and_stopwatch
-
-# keyindicator
-
-# shutdown_menu
-
-```
-
-**IMPORTANT: Please make sure that you give the scripts permission to run by doing `chmod +x <scriptname.sh>` for all the scripts you use.**
-
-### 3.6.3. i3block: apt-upgrades
-
-NOTE: I have changed this script and renamed it to [i3/my-i3blocks/checkupdates](i3/my-i3blocks/checkupdates). So check with meld and include any new changes from the i3blocks-contrib repo as necessary.
-
-```bash
-meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
-```
-
-### 3.6.4. i3block: Bandwidth
-
-```bash
-# Copy source
-cp i3blocks-contrib/bandwidth2/* i3/my-i3blocks/bandwidth2-source/
-cd i3/my-i3blocks/bandwidth2-source/
-make
-mv bandwidth2 ..
-```
-
-### 3.6.5. i3block: Volume control
-
-```bash
-cp i3blocks-contrib/volume/volume i3/my-i3blocks/
-```
-
-### 3.6.6. i3block: memory
-
-```bash
-cp i3blocks-contrib/memory/memory i3/my-i3blocks/
-```
-
-### 3.6.7. i3block: disk
-
-```bash
-cp i3blocks-contrib/disk/disk i3/my-i3blocks/
-```
-
-### 3.6.8. i3block: cpu and hdd temperature
-
-I've added a nicer gradient temperature script from [here](https://github.com/hastinbe/i3blocks-gradient-temp) instead of the default temperature script.
-
-
-```bash
-# Does not need to be done again. This is just the command I used to add the submodule.
-git submodule add https://github.com/hastinbe/i3blocks-gradient-temp
-```
-
-```bash
-cp i3blocks-gradient-temp/gradient-temp i3/my-i3blocks
-```
-
-### 3.6.9. i3block: wifi
-
-```bash
-cp i3blocks-contrib/wifi/wifi i3/my-i3blocks
-```
-
-### 3.6.10. i3block: cpu_usage
-
-```bash
-cp i3blocks-contrib/cpu_usage/cpu_usage i3/my-i3blocks
-```
-
-### 3.6.11. i3block: load_average
-
-```bash
-cp i3blocks-contrib/load_average/load_average i3/my-i3blocks
-```
-
-### 3.6.12. i3block: gpu-load
-
-```bash
-cp i3blocks-contrib/gpu-load/gpu-load i3/my-i3blocks
-```
-
-### 3.6.13. i3block: timer_and_stopwatch
-
-```bash
-cp i3blocks-contrib/timer_and_stopwatch/timer_and_stopwatch i3/my-i3blocks
-```
-
-### 3.6.14. i3block: keyindicator
-
-```bash
-cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
-```
-
-### 3.6.15. i3block: shutdown_menu
-
-```bash
-cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
-```
 
 ## 3.7. Get programs to start automatically
 
