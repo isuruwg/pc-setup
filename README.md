@@ -251,7 +251,7 @@ Setting up pre-commit using poetry ([pyproject.toml](pyproject.toml)) file.
 cd setup-using-ansible
 # pre commit has been installed on the root folder of this repo too
 poetry install --no-root
-pre-commit install
+pre-commit install --allow-missing-config
 ```
 
 Setting up pre-commit in a new environment:
@@ -259,7 +259,7 @@ Setting up pre-commit in a new environment:
 # Navigate to the root folder of this repo and do: 
 poetry init
 poetry add pre-commit
-pre-commit install
+pre-commit install --allow-missing-config
 ```
 
 ## 2.9. xautolock
