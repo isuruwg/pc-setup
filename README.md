@@ -40,7 +40,7 @@
   - [4.3. gnucash](#43-gnucash)
   - [4.4. Install chromium](#44-install-chromium)
   - [4.5. 7-zip](#45-7-zip)
-  - [4.6. Set-up VirtualBox](#46-set-up-virtualbox)
+  - [4.6. Set-up VirtualBox [REMOVED as of 2022-01-27]](#46-set-up-virtualbox-removed-as-of-2022-01-27)
   - [4.7. Set-up Kubernetes](#47-set-up-kubernetes)
     - [4.7.1. Method1: Using KIND](#471-method1-using-kind)
     - [4.7.2. Method 2: Using Vagrant and Ansible](#472-method-2-using-vagrant-and-ansible)
@@ -246,10 +246,19 @@ poetry install
 
 ## 2.8. Setup pre-commit for git [optional]
 
-
+Setting up pre-commit using poetry ([pyproject.toml](pyproject.toml)) file. 
 ```bash
 cd setup-using-ansible
+# pre commit has been installed on the root folder of this repo too
 poetry install --no-root
+pre-commit install
+```
+
+Setting up pre-commit in a new environment:
+```bash
+# Navigate to the root folder of this repo and do: 
+poetry init
+poetry add pre-commit
 pre-commit install
 ```
 
@@ -498,7 +507,7 @@ sudo snap install chromium
 sudo apt install p7zip-full
 ```
 
-## 4.6. Set-up VirtualBox
+## 4.6. Set-up VirtualBox [REMOVED as of 2022-01-27]
 
 Reference: [official virtualbox documentation](https://www.virtualbox.org/wiki/Linux_Downloads)
 
@@ -520,6 +529,13 @@ wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-
 
 # Install virtualbox
 sudo apt install virtualbox-6.1
+```
+
+```bash
+# Removed virtualbox as follows from main Desktop
+sudo apt remove virtualbox-6.1
+sudo apt autoremove
+
 ```
 
 ## 4.7. Set-up Kubernetes
