@@ -272,7 +272,7 @@ sudo apt install xautolock
 
 ## 2.10. Aptitude
 
-Aptitude is not required to be install as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
+Aptitude is not required to be installed as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
 
 ```bash
 sudo apt install aptitude
@@ -536,6 +536,14 @@ sudo apt install virtualbox-6.1
 sudo apt remove virtualbox-6.1
 sudo apt autoremove
 
+# List keys to find which was added for virtualbox (it was added above during install)
+sudo apt-key list
+
+#find the correct key associated with virtualbox and delete
+sudo apt-key del "KEY STRING"
+
+# remove the list file
+sudo rm /etc/apt/sources.list.d/virtualbox.list
 ```
 
 ## 4.7. Set-up Kubernetes
