@@ -29,21 +29,30 @@ SYMBOL_C=${SYMBOL_C:-"&#x2103;"}
 SYMBOL_F=${SYMBOL_F:-"&#x2109;"}
 
 temp() {
-    local temp=$(subfeature_f 'temp1_input')
-    if $FAHRENHEIT; then temp=$(deg_ctof $temp); fi
-    echo $temp
+    local temp
+    temp=$(subfeature_f 'temp1_input')
+
+    if $FAHRENHEIT; then temp=$(deg_ctof "$temp"); fi
+    
+    echo "$temp"
 }
 
 temp_max() {
-    local temp=$(subfeature_f 'temp1_max')
-    if $FAHRENHEIT; then temp=$(deg_ctof $temp); fi
-    echo $temp
+    local temp
+    temp=$(subfeature_f 'temp1_max')
+
+    if $FAHRENHEIT; then temp=$(deg_ctof "$temp"); fi
+    
+    echo "$temp"
 }
 
 temp_crit() {
-    local temp=$(subfeature_f 'temp1_crit')
-    if $FAHRENHEIT; then temp=$(deg_ctof $temp); fi
-    echo $temp
+    local temp
+    temp=$(subfeature_f 'temp1_crit')
+
+    if $FAHRENHEIT; then temp=$(deg_ctof "$temp"); fi
+
+    echo "$temp"
 }
 
 subfeature_f() {
@@ -59,18 +68,18 @@ max() {
 }
 
 clamp() {
-    echo $(min $(max $1 $2) $3)
+    min "$(max "$1" "$2")" "$3"
 }
 
 deg_ctof() {
-    echo 'scale=1; $1 * (9 / 5) + 32' | bc
+    echo "scale=1; $1 * (9 / 5) + 32" | bc
 }
 
 temp_symbol() {
     if $FAHRENHEIT; then
-        echo $SYMBOL_F
+        echo "$SYMBOL_F"
     else
-        echo $SYMBOL_C
+        echo "$SYMBOL_C"
     fi
 }
 
@@ -84,26 +93,26 @@ interpolate_rgb() {
     local -i steps=$3
     local -a colors
 
-    printf -v startR "%d" 0x${1:1:2}
-    printf -v startG "%d" 0x${1:3:2}
-    printf -v startB "%d" 0x${1:5:2}
-    printf -v endR "%d" 0x${2:1:2}
-    printf -v endG "%d" 0x${2:3:2}
-    printf -v endB "%d" 0x${2:5:2}
+    printf -v startR "%d" "0x${1:1:2}"
+    printf -v startG "%d" "0x${1:3:2}"
+    printf -v startB "%d" "0x${1:5:2}"
+    printf -v endR "%d" "0x${2:1:2}"
+    printf -v endG "%d" "0x${2:3:2}"
+    printf -v endB "%d" "0x${2:5:2}"
 
-    stepR=$(( ($endR - $startR) / $steps ))
-    stepG=$(( ($endG - $startG) / $steps ))
-    stepB=$(( ($endB - $startB) / $steps ))
+    stepR=$(( (endR - startR) / steps ))
+    stepG=$(( (endG - startG) / steps ))
+    stepB=$(( (endB - startB) / steps ))
 
-    for i in $(seq 0 $steps); do
-        local -i R=$(( $startR + ($stepR * $i) ))
-        local -i G=$(( $startG + ($stepG * $i) ))
-        local -i B=$(( $startB + ($stepB * $i) ))
+    for i in $(seq 0 "$steps"); do
+        local -i R=$(( startR + (stepR * i) ))
+        local -i G=$(( startG + (stepG * i) ))
+        local -i B=$(( startB + (stepB * i) ))
 
         colors+=( "$(printf "#%02x%02x%02x\n" $R $G $B)" )
     done
 
-    colors+=( "$(printf "#%02x%02x%02x\n" $endR $endG $endB)" )
+    colors+=( "$(printf "#%02x%02x%02x\n" "$endR" "$endG" "$endB")" )
 
     echo "${colors[@]}"
 }
@@ -114,10 +123,12 @@ interpolate_rgb() {
 #   $1 - The temperature
 #   $2 - Maximum temperature
 temp_color() {
-    local colors=( $(interpolate_rgb "$COLOR_GRADIENT_START" "$COLOR_GRADIENT_END" 10) )
+    local colors
+
+    read -ra colors <<< "$(interpolate_rgb "$COLOR_GRADIENT_START" "$COLOR_GRADIENT_END" 10)"
 
     if [ -n "$2" ]; then
-        echo $(plookup $1 $2 ${colors[@]})
+        plookup "$1" "$2" "${colors[@]}"
     fi
 }
 
@@ -128,19 +139,20 @@ temp_color() {
 #   $2 - Number to get a percentage of
 #   $3 - An array of potential values
 plookup() {
-    if [ -z "$2" -o -z "$3" ]; then
+    if [ -z "$2" ] || [ -z "$3" ]; then
         return
     fi
 
-    local table=( ${@:3} )
+    local table=( "${@:3}" )
     local number2=${2%.*}
-    local temp=$(min ${1%.*} $number2)
-    local percent_max=$(( $temp * $number2 / 100 ))
-    local index=$(( $percent_max * ${#table[@]} / 100 ))
+    local temp
+    temp=$(min "${1%.*}" "$number2")
+    local percent_max=$(( temp * number2 / 100 ))
+    local index=$(( percent_max * ${#table[@]} / 100 ))
 
     index=$(clamp $index 0 $(( ${#table[@]} - 1 )) )
 
-    echo ${table[$index]}
+    echo "${table[$index]}"
 }
 
 # Output text wrapped in a span element
@@ -157,6 +169,7 @@ span() {
     if [ -n "$FONT" ]; then attribs[font]="$FONT"; fi
 
     if [ "$1" = "-c" ]; then
+        # shellcheck disable=SC2034
         attribs[color]="$2"
         text="${*:3}"
     fi
@@ -195,9 +208,9 @@ multicolor() {
     fi
 
     if [ -n "$color" ]; then
-        echo "$(span -c "$color" "$1")"
+        span -c "$color" "$1"
     else
-        echo "$(span "$1")"
+        span "$1"
     fi
 }
 
@@ -209,6 +222,8 @@ Options:
   -s\t\t\tsensor to query
   -f\t\t\tdisplay temperatures in fahrenheit
   -G\t\t\tdisable color gradient
+  -c <temp>\t\toverride critical temperature
+  -m <temp>\t\toverride maximum temperature
   -h\t\t\tdisplay this help and exit
 " 1>&2
     exit 1
@@ -220,14 +235,16 @@ temp_gt_eq() {
 
 ###############################################################################
 
-while getopts "C:E:f:F:GhHs:S:t:" o; do
+while getopts "c:C:E:f:F:GhHm:s:S:t:" o; do
     case "$o" in
+        c) OVERRIDE_CRIT_TEMP="${OPTARG}" ;;
         C) SYMBOL_C="${OPTARG}" ;;
         E) COLOR_GRADIENT_END="${OPTARG}" ;;
         f) FONT="${OPTARG}" ;;
         F) SYMBOL_F="${OPTARG}" ;;
         G) GRADIENT=false ;;
         H) FAHRENHEIT=true ;;
+        m) OVERRIDE_MAX_TEMP="${OPTARG}" ;;
         s) SENSOR="${OPTARG}" ;;
         S) COLOR_GRADIENT_START="${OPTARG}" ;;
         t) COLOR_TEMP="${OPTARG}" ;;
@@ -241,16 +258,27 @@ if [ -z "$SENSOR" ]; then
     exit 1
 fi
 
-SENSORS=$(sensors -u $SENSOR)
+SENSORS=$(sensors -u "$SENSOR")
 temp=$(temp)
-temp_max=$(temp_max)
-temp_crit=$(temp_crit)
-temp_color=$(temp_color $temp $temp_max)
+
+if [[ -v OVERRIDE_MAX_TEMP ]]; then
+  temp_max="$OVERRIDE_MAX_TEMP"
+else 
+  temp_max=$(temp_max)
+fi
+
+if [[ -v OVERRIDE_CRIT_TEMP ]]; then
+  temp_crit="$OVERRIDE_CRIT_TEMP"
+else 
+  temp_crit=$(temp_crit)
+fi
+
+temp_color=$(temp_color "$temp" "$temp_max")
 colored_temp=$(multicolor "${temp}$(temp_symbol)" "$COLOR_TEMP" "$temp_color" $GRADIENT)
 
 echo -e "$colored_temp\n$colored_temp\n"
 
-[ $(temp_gt_eq "$temp" "$temp_crit") ] && exit 33
-[ $(temp_gt_eq "$temp" "$temp_max") ] && exit 33
+[[ -v $temp_crit && $(temp_gt_eq "$temp" "$temp_crit") ]] && exit 33
+[[ -v $temp_max && $(temp_gt_eq "$temp" "$temp_max") ]] && exit 34
 
 exit 0

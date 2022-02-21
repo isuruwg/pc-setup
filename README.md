@@ -9,12 +9,19 @@
   - [2.1. Enable firewall](#21-enable-firewall)
   - [2.2. Git](#22-git)
   - [2.3. Meld](#23-meld)
-  - [2.4. Sensors](#24-sensors)
-  - [2.5. xautolock](#25-xautolock)
-  - [2.6. Aptitude](#26-aptitude)
-  - [2.7. tmux](#27-tmux)
-    - [2.7.1. Setup tmux](#271-setup-tmux)
-  - [2.8. Python](#28-python)
+  - [2.4. VSCode](#24-vscode)
+    - [2.4.1. My preferred settings](#241-my-preferred-settings)
+    - [2.4.2. VSCode plugins](#242-vscode-plugins)
+  - [2.5. Sensors](#25-sensors)
+  - [2.6. Python](#26-python)
+    - [2.6.1. Install pyenv](#261-install-pyenv)
+    - [2.6.2. Install Poetry](#262-install-poetry)
+  - [2.7. Install Ansible](#27-install-ansible)
+  - [2.8. Setup pre-commit for git [optional]](#28-setup-pre-commit-for-git-optional)
+  - [2.9. xautolock](#29-xautolock)
+  - [2.10. Aptitude](#210-aptitude)
+  - [2.11. tmux](#211-tmux)
+    - [2.11.1. Setup tmux](#2111-setup-tmux)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -23,42 +30,25 @@
   - [3.5. Screen resolution and display control](#35-screen-resolution-and-display-control)
     - [3.5.1. xrandr](#351-xrandr)
     - [3.5.2. arandr (Optional)](#352-arandr-optional)
-  - [3.6. i3blocks](#36-i3blocks)
-    - [3.6.1. Installing i3blocks](#361-installing-i3blocks)
-    - [3.6.2. i3blocks contrib](#362-i3blocks-contrib)
-    - [3.6.3. i3block: apt-upgrades](#363-i3block-apt-upgrades)
-    - [3.6.4. i3block: Bandwidth](#364-i3block-bandwidth)
-    - [3.6.5. i3block: Volume control](#365-i3block-volume-control)
-    - [3.6.6. i3block: memory](#366-i3block-memory)
-    - [3.6.7. i3block: disk](#367-i3block-disk)
-    - [3.6.8. i3block: cpu and hdd temperature](#368-i3block-cpu-and-hdd-temperature)
-    - [3.6.9. i3block: wifi](#369-i3block-wifi)
-    - [3.6.10. i3block: cpu_usage](#3610-i3block-cpu_usage)
-    - [3.6.11. i3block: load_average](#3611-i3block-load_average)
-    - [3.6.12. i3block: gpu-load](#3612-i3block-gpu-load)
-    - [3.6.13. i3block: timer_and_stopwatch](#3613-i3block-timer_and_stopwatch)
-    - [3.6.14. i3block: keyindicator](#3614-i3block-keyindicator)
-    - [3.6.15. i3block: shutdown_menu](#3615-i3block-shutdown_menu)
+  - [3.6. Status bar replacement](#36-status-bar-replacement)
   - [3.7. Get programs to start automatically](#37-get-programs-to-start-automatically)
     - [3.7.1. Dropbox](#371-dropbox)
   - [3.8. Copy modified i3 config file to ~/.config/i3/](#38-copy-modified-i3-config-file-to-configi3)
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
-  - [4.2. VSCode](#42-vscode)
-    - [4.2.1. VSCode plugins](#421-vscode-plugins)
-  - [4.3. VLC](#43-vlc)
-  - [4.4. gnucash](#44-gnucash)
-  - [4.5. Install chromium](#45-install-chromium)
-  - [4.6. 7-zip](#46-7-zip)
-  - [4.7. Set-up VirtualBox](#47-set-up-virtualbox)
-  - [4.8. Install Docker](#48-install-docker)
-  - [4.9. Set-up Kubernetes](#49-set-up-kubernetes)
-    - [4.9.1. Method1: Using KIND](#491-method1-using-kind)
-    - [4.9.2. Method 2: Using Vagrant and Ansible](#492-method-2-using-vagrant-and-ansible)
-      - [4.9.2.1. Install Vagrant](#4921-install-vagrant)
-      - [4.9.2.2. Install Ansible](#4922-install-ansible)
-      - [4.9.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4923-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
-    - [4.9.3. Method 3: Using K3D](#493-method-3-using-k3d)
+  - [4.2. VLC](#42-vlc)
+  - [4.3. gnucash](#43-gnucash)
+  - [4.4. Install chromium](#44-install-chromium)
+  - [4.5. 7-zip](#45-7-zip)
+  - [4.6. Set-up VirtualBox [REMOVED as of 2022-01-27]](#46-set-up-virtualbox-removed-as-of-2022-01-27)
+  - [4.7. Install Docker](#47-install-docker)
+  - [4.8. Set-up Kubernetes](#48-set-up-kubernetes)
+    - [4.8.1. Method1: Using KIND](#481-method1-using-kind)
+    - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
+      - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
+      - [4.8.2.2. Install Ansible](#4822-install-ansible)
+      - [4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4823-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
+    - [4.8.3. Method 3: Using K3D](#483-method-3-using-k3d)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -145,16 +135,136 @@ sudo apt install git
 sudo apt install meld
 ```
 
-## 2.4. Sensors
+## 2.4. VSCode
+
+[REF](https://code.visualstudio.com/docs/setup/linux)
+
+```bash
+sudo snap install --classic code
+```
+
+### 2.4.1. My preferred settings
+
+Color theme: Monokai
+
+Editor Font size: 16
+
+### 2.4.2. VSCode plugins
+
+1. [Markdown emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji)
+2. [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+
+## 2.5. Sensors
 
 ```bash
 sudo apt install lm-sensors 
 sudo sensors-detect
 # Selected yes to everything
-sensors
+watch -d sensors
+# or just do, "sensors" to view temperature once. 
 ```
 
-## 2.5. xautolock
+## 2.6. Python
+
+### 2.6.1. Install pyenv
+
+[Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
+
+Pyenv has been added to this repo as a submodule.
+
+Follow the instructions [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) to install the prerequisites.
+
+And then do the [basic github checkout method using the submodule here to install pyenv](https://github.com/pyenv/pyenv#basic-github-checkout). Following are the steps I followed:
+
+```bash
+cd ~/pc-setup/pyenv/
+
+# OPTIONAL: Fetch the latest version from remote
+git fetch
+git difftool origin
+# Or do "git merge" (or just git pull) to get all the updates automatically.
+
+src/configure && make -C src # Optional
+
+# the sed invocation inserts the lines at the start of the file
+# after any initial comment lines
+sed -Ei -e '/^([^#]|$)/ {a \
+export PYENV_ROOT="$HOME/pc-setup/pyenv"
+a \
+export PATH="$PYENV_ROOT/bin:$PATH"
+a \
+' -e ':a' -e '$!{n;ba};}' ~/.profile
+echo 'eval "$(pyenv init --path)"' >>~/.profile
+
+echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+```
+
+(You might need to log out and log back in after)
+
+Do the following after installation to set up a python environment
+
+```bash
+# List all available Python versions
+pyenv install --list
+pyenv install <version>
+# For example;
+pyenv install 3.10.1 
+
+# set up global python
+pyenv global 3.10.1
+
+# set local python version:
+# Navigate to a project folder and do 
+pyenv local 3.10.1
+```
+
+### 2.6.2. Install Poetry
+
+[[REF](https://github.com/python-poetry/poetry#installation)]
+
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Add $HOME/.local/bin to PATH using ~/.bashrc
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+
+# Open a new terminal and check if Poetry is installed properly
+poetry --version
+```
+
+If you would like to uninstall poetry, you can do so anytime by doing: `curl -sSL https://install.python-poetry.org | python3 - --uninstall`
+
+## 2.7. Install Ansible
+
+Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
+
+Ansible can be installed easily with pip. Let's first create a virtual environment: 
+(Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
+
+```bash
+cd setup-using-ansible
+poetry install
+```
+
+## 2.8. Setup pre-commit for git [optional]
+
+Setting up pre-commit using poetry ([pyproject.toml](pyproject.toml)) file. 
+```bash
+cd setup-using-ansible
+# pre commit has been installed on the root folder of this repo too
+poetry install --no-root
+pre-commit install --allow-missing-config
+```
+
+Setting up pre-commit in a new environment:
+```bash
+# Navigate to the root folder of this repo and do: 
+poetry init
+poetry add pre-commit
+pre-commit install --allow-missing-config
+```
+
+## 2.9. xautolock
 
 xautolock is required for automatically locking the screen with i3. If you are not using i3, this is not needed
 
@@ -162,21 +272,21 @@ xautolock is required for automatically locking the screen with i3. If you are n
 sudo apt install xautolock
 ```
 
-## 2.6. Aptitude
+## 2.10. Aptitude
 
-Aptitude is not required to be install as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
+Aptitude is not required to be installed as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
 
 ```bash
 sudo apt install aptitude
 ```
 
-## 2.7. tmux
+## 2.11. tmux
 
 ```bash
 sudo apt install tmux
 ```
 
-### 2.7.1. Setup tmux
+### 2.11.1. Setup tmux
 
 ```bash
 # create ~/.tmux.conf
@@ -204,50 +314,7 @@ set -g status-bg  black
 # unbind C-b
 ```
 
-## 2.8. Python
 
-[Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
-
-Pyenv has been added to this repo as a submodule.
-
-Follow the instructions [here](https://github.com/pyenv/pyenv/wiki#suggested-build-environment) to install the prerequisites.
-
-And then do the [basic github checkout method using the submodule here to install pyenv](https://github.com/pyenv/pyenv#basic-github-checkout). Following are the steps I followed:
-
-```bash
-cd ~/pc-setup/pyenv/
-src/configure && make -C src # Optional
-
-# the sed invocation inserts the lines at the start of the file
-# after any initial comment lines
-sed -Ei -e '/^([^#]|$)/ {a \
-export PYENV_ROOT="$HOME/pc-setup/pyenv"
-a \
-export PATH="$PYENV_ROOT/bin:$PATH"
-a \
-' -e ':a' -e '$!{n;ba};}' ~/.profile
-echo 'eval "$(pyenv init --path)"' >>~/.profile
-
-echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-```
-
-(You might need to log out and log back in after)
-
-Do the following after installation to set up a python environment
-
-```bash
-pyenv install <version>
-# For example;
-pyenv install 3.9.7 
-
-# set up global python
-pyenv global 3.9.7
-
-# set local python version:
-# Navigate to a project folder and do 
-pyenv local 3.9.7
-
-```
 
 # 3. Install i3
 
@@ -294,7 +361,7 @@ pyenv local 3.9.7
     mv Downloads/fontawesome-free-5.13.0-web/webfonts/fa-brands-400.ttf .fonts/
     mv Downloads/fontawesome-free-5.13.0-web/webfonts/fa-regular-400.ttf .fonts/
     ```
-  - You can use the [fontawesome cheatsheet](https://fontawesome.com/v5/cheatsheet) to copy icons
+  - You can use the [fontawesome cheatsheet](https://fontawesome.com/v5/cheatsheet) to copy icons that you want to use in config files.
 
 - Install Yosemite San Fransisco Font [[REF](https://youtu.be/ARKIwOlazKI?t=156)]
   - Download [YosemiteSanFranciscoFont](https://github.com/supermarin/YosemiteSanFranciscoFont) (Download the zip files from the [manual install section](https://github.com/supermarin/YosemiteSanFranciscoFont#manual-install).) 
@@ -336,182 +403,26 @@ Following are some scripts I use for configuration:
 3. TV only  
     `xrandr --output DP-3 --mode 3840x2160 --right-of DP-0 --scale 0.5x0.5 --output HDMI-0 --off --output DP-0 --off`
 
+4. Smaller laptop: Laptop screen only
+
+    `xrandr --output eDP --mode 1920x1080 --right-of HDMI-A-0 --output HDMI-A-0 --off`
+
+5. Smaller laptop: Laptop screen + hdmi (big screen)
+
+    `xrandr --output eDP --mode 1920x1080 --right-of HDMI-A-0 --output HDMI-A-0 --mode 2560x1440`
+
 I've added these scripts to the [i3/my-i3blocks/shutdown_menu](i3/my-i3blocks/shutdown_menu) file as options for quickly switching between them.
 
 ### 3.5.2. arandr (Optional)
 
 Install arandr (if you need a gui to control screens) by doing `sudo apt install arandr`
 
-## 3.6. i3blocks
+## 3.6. Status bar replacement
 
-i3blocks provides a better(subjective opinion) status bar than the i3bar that comes default with i3.
+There are many options for replacing the status bar. In this section we'll explore replacing the status bar with [i3blocks](https://github.com/vivien/i3blocks). More details about replacing the i3bar and i3status can be found [here](https://wiki.archlinux.org/title/i3#i3status)
 
-I've added the i3blocks git repo as a submodule to this repo by using the following:
-(More info about submodules can be found [here](https://git-scm.com/book/en/v2/Git-Tools-Submodules))
+Please follow the steps in [i3blocks-setup.md](i3blocks-setup.md) to install and set up i3blocks
 
-```bash
-git submodule add https://github.com/vivien/i3blocks.git
-```
-
-### 3.6.1. Installing i3blocks
-
-Since the i3blocks included with Ubuntu apt is outdated, I installed it from source.
-[Ref](https://github.com/vivien/i3blocks#installation)
-
-```bash
-sudo apt install autoconf build-essential
-cd i3blocks
-./autogen.sh
-./configure
-make
-# IG: Had to use sudo here instead of just make install as the reference suggests
-sudo make install
-```
-
-### 3.6.2. i3blocks contrib
-
-I've added i3blocks-contrib as a submodule to this repo.
-
-```bash
-git submodule add https://github.com/vivien/i3blocks-contrib.git
-```
-
-You can check the differences between the i3blocks-config scripts in my repo vs the ones from the original repo by doing:
-
-```bash
-meld i3/my-i3blocks/<SCRIPT-NAME> i3blocks-contrib/<SCRIPT-FOLDER-NAME>/<SCRIPT-NAME>
-```
-
-The corresponding commands to quickly check differences in the modules I've used are as follows:
-
-```bash
-# apt-upgrades
-meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
-
-# bandwidth (folder compare)
-meld i3/my-i3blocks/bandwidth2-source/ i3blocks-contrib/bandwidth2/
-
-#volume
-meld i3/my-i3blocks/volume i3blocks-contrib/volume/volume
-
-#memory
-meld i3/my-i3blocks/memory i3blocks-contrib/memory/memory 
-
-#disk
-meld i3/my-i3blocks/disk i3blocks-contrib/disk/disk 
-
-#gradient-temp
-meld i3/my-i3blocks/gradient-temp i3blocks-gradient-temp/gradient-temp 
-
-# wifi
-
-# cpu usage
-
-# load_average
-
-# gpu-load
-
-# timer_and_stopwatch
-
-# keyindicator
-
-# shutdown_menu
-
-```
-
-**IMPORTANT: Please make sure that you give the scripts permission to run by doing `chmod +x <scriptname.sh>` for all the scripts you use.**
-
-### 3.6.3. i3block: apt-upgrades
-
-NOTE: I have changed this script and renamed it to [i3/my-i3blocks/checkupdates](i3/my-i3blocks/checkupdates). So check with meld and include any new changes from the i3blocks-contrib repo as necessary.
-
-```bash
-meld i3/my-i3blocks/checkupdates i3blocks-contrib/apt-upgrades/apt-upgrades
-```
-
-### 3.6.4. i3block: Bandwidth
-
-```bash
-# Copy source
-cp i3blocks-contrib/bandwidth2/* i3/my-i3blocks/bandwidth2-source/
-cd i3/my-i3blocks/bandwidth2-source/
-make
-mv bandwidth2 ..
-```
-
-### 3.6.5. i3block: Volume control
-
-```bash
-cp i3blocks-contrib/volume/volume i3/my-i3blocks/
-```
-
-### 3.6.6. i3block: memory
-
-```bash
-cp i3blocks-contrib/memory/memory i3/my-i3blocks/
-```
-
-### 3.6.7. i3block: disk
-
-```bash
-cp i3blocks-contrib/disk/disk i3/my-i3blocks/
-```
-
-### 3.6.8. i3block: cpu and hdd temperature
-
-I've added a nicer gradient temperature script from [here](https://github.com/hastinbe/i3blocks-gradient-temp) instead of the default temperature script.
-
-
-```bash
-# Does not need to be done again. This is just the command I used to add the submodule.
-git submodule add https://github.com/hastinbe/i3blocks-gradient-temp
-```
-
-```bash
-cp i3blocks-gradient-temp/gradient-temp i3/my-i3blocks
-```
-
-### 3.6.9. i3block: wifi
-
-```bash
-cp i3blocks-contrib/wifi/wifi i3/my-i3blocks
-```
-
-### 3.6.10. i3block: cpu_usage
-
-```bash
-cp i3blocks-contrib/cpu_usage/cpu_usage i3/my-i3blocks
-```
-
-### 3.6.11. i3block: load_average
-
-```bash
-cp i3blocks-contrib/load_average/load_average i3/my-i3blocks
-```
-
-### 3.6.12. i3block: gpu-load
-
-```bash
-cp i3blocks-contrib/gpu-load/gpu-load i3/my-i3blocks
-```
-
-### 3.6.13. i3block: timer_and_stopwatch
-
-```bash
-cp i3blocks-contrib/timer_and_stopwatch/timer_and_stopwatch i3/my-i3blocks
-```
-
-### 3.6.14. i3block: keyindicator
-
-```bash
-cp i3blocks-contrib/keyindicator/keyindicator i3/my-i3blocks
-```
-
-### 3.6.15. i3block: shutdown_menu
-
-```bash
-cp i3blocks-contrib/shutdown_menu/shutdown_menu i3/my-i3blocks
-```
 
 ## 3.7. Get programs to start automatically
 
@@ -572,20 +483,7 @@ Other useful fail2ban commands
 
 [OPTIONAL] : You can also make fail2ban and ufw work together better by following [this](https://askubuntu.com/questions/54771/potential-ufw-and-fail2ban-conflicts)
 
-## 4.2. VSCode
-
-[REF](https://code.visualstudio.com/docs/setup/linux)
-
-```bash
-sudo snap install --classic code
-```
-
-### 4.2.1. VSCode plugins
-
-1. [Markdown emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji)
-2. [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
-
-## 4.3. VLC
+## 4.2. VLC
 
 [REF](https://www.videolan.org/vlc/download-ubuntu.html)
 
@@ -593,25 +491,25 @@ sudo snap install --classic code
 sudo snap install vlc
 ```
 
-## 4.4. gnucash
+## 4.3. gnucash
 
 ```
 sudo apt install gnucash
 ```
 
-## 4.5. Install chromium
+## 4.4. Install chromium
 
 ```bash
 sudo snap install chromium
 ```
 
-## 4.6. 7-zip
+## 4.5. 7-zip
 
 ```bash
 sudo apt install p7zip-full
 ```
 
-## 4.7. Set-up VirtualBox
+## 4.6. Set-up VirtualBox [REMOVED as of 2022-01-27]
 
 Reference: [official virtualbox documentation](https://www.virtualbox.org/wiki/Linux_Downloads)
 
@@ -635,21 +533,36 @@ wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-
 sudo apt install virtualbox-6.1
 ```
 
-## 4.8. Install Docker
+```bash
+# Removed virtualbox as follows from main Desktop
+sudo apt remove virtualbox-6.1
+sudo apt autoremove
 
-## 4.9. Set-up Kubernetes
+# List keys to find which was added for virtualbox (it was added above during install)
+sudo apt-key list
+
+#find the correct key associated with virtualbox and delete
+sudo apt-key del "KEY STRING"
+
+# remove the list file
+sudo rm /etc/apt/sources.list.d/virtualbox.list
+```
+
+## 4.7. Install Docker
+
+## 4.8. Set-up Kubernetes
 
 There are multiple ways to set-up K8S; 
 
-### 4.9.1. Method1: Using KIND
+### 4.8.1. Method1: Using KIND
 
 Please refer to the notes [in this GitHub repo](https://github.com/isuruwg/ml-k8s-tutorial#21-installing-for-local-development)
 
-### 4.9.2. Method 2: Using Vagrant and Ansible
+### 4.8.2. Method 2: Using Vagrant and Ansible
 
 Reference : [Install K8S with Vagrant and Ansible](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
 
-#### 4.9.2.1. Install Vagrant
+#### 4.8.2.1. Install Vagrant
 
 Ref: [vagrantup](https://www.vagrantup.com/downloads)
 
@@ -675,18 +588,15 @@ logout # to log out from the vm
 vagrant destroy
 ```
 
-#### 4.9.2.2. Install Ansible
+#### 4.8.2.2. Install Ansible
 
-Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
-
-Ansible can be installed easily with pip. Let's first create a virtual environment: 
-(Please note that the following instructions assume that you have `pyenv` installed in your system. If you don't have `pyenv` installed, please adjust the commnands below as necessary)
+Please refer to the [section on installing the essentials](#2-installconfigure-the-essentials) above to install Ansible if you haven't already done so.
 
 ```bash
 mkdir K8S
 cd K8S
 
-pyenv local 3.9.7
+pyenv local 3.10.1
 
 #create and activate virtual environment
 python -m venv venv
@@ -699,7 +609,7 @@ pip install ansible
 pip freeze > requirements.txt
 ```
 
-#### 4.9.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
+#### 4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
 I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.**168**.56.0/21.
 
@@ -725,7 +635,7 @@ vagrant ssh node-1
 vagrant ssh node-2
 ```
 
-### 4.9.3. Method 3: Using K3D
+### 4.8.3. Method 3: Using K3D
 
 
 

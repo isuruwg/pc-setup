@@ -20,6 +20,10 @@ font pango:System San Francisco Display Thin 16
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment i3
+
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
@@ -183,6 +187,11 @@ bar {
         # i3bar_command $HOME/scripts/i3scripts/polybar/run_polybar.sh
 }
 # exec_always --no-startup-id $HOME/scripts/i3scripts/polybar/run_polybar.sh
+# bar toggle, hide or show
+bindsym $mod+b bar mode toggle
+
+# start xfce4-panel
+# exec --no-startup-id xfce4-panel --disable-wm-check
 
 # IG
 # exec xrandr --dpi 220
