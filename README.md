@@ -37,18 +37,19 @@
 - [4. Install other everyday programs](#4-install-other-everyday-programs)
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VLC](#42-vlc)
-  - [4.3. gnucash](#43-gnucash)
-  - [4.4. Install chromium](#44-install-chromium)
-  - [4.5. 7-zip](#45-7-zip)
-  - [4.6. Set-up VirtualBox [REMOVED as of 2022-01-27]](#46-set-up-virtualbox-removed-as-of-2022-01-27)
-  - [4.7. Install Docker](#47-install-docker)
-  - [4.8. Set-up Kubernetes](#48-set-up-kubernetes)
-    - [4.8.1. Method1: Using KIND](#481-method1-using-kind)
-    - [4.8.2. Method 2: Using Vagrant and Ansible](#482-method-2-using-vagrant-and-ansible)
-      - [4.8.2.1. Install Vagrant](#4821-install-vagrant)
-      - [4.8.2.2. Install Ansible](#4822-install-ansible)
-      - [4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4823-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
-    - [4.8.3. Method 3: Using K3D](#483-method-3-using-k3d)
+  - [4.3. gnome pomodoro](#43-gnome-pomodoro)
+  - [4.4. gnucash](#44-gnucash)
+  - [4.5. Install chromium](#45-install-chromium)
+  - [4.6. 7-zip](#46-7-zip)
+  - [4.7. Set-up VirtualBox [REMOVED as of 2022-01-27]](#47-set-up-virtualbox-removed-as-of-2022-01-27)
+  - [4.8. Install Docker](#48-install-docker)
+  - [4.9. Set-up Kubernetes](#49-set-up-kubernetes)
+    - [4.9.1. Method1: Using KIND](#491-method1-using-kind)
+    - [4.9.2. Method 2: Using Vagrant and Ansible](#492-method-2-using-vagrant-and-ansible)
+      - [4.9.2.1. Install Vagrant](#4921-install-vagrant)
+      - [4.9.2.2. Install Ansible](#4922-install-ansible)
+      - [4.9.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#4923-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
+    - [4.9.3. Method 3: Using K3D](#493-method-3-using-k3d)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -491,25 +492,33 @@ Other useful fail2ban commands
 sudo snap install vlc
 ```
 
-## 4.3. gnucash
+## 4.3. gnome pomodoro
+
+[REF](https://gnomepomodoro.org/)
+
+```bash
+sudo apt-get install gnome-shell-pomodoro
+```
+
+## 4.4. gnucash
 
 ```
 sudo apt install gnucash
 ```
 
-## 4.4. Install chromium
+## 4.5. Install chromium
 
 ```bash
 sudo snap install chromium
 ```
 
-## 4.5. 7-zip
+## 4.6. 7-zip
 
 ```bash
 sudo apt install p7zip-full
 ```
 
-## 4.6. Set-up VirtualBox [REMOVED as of 2022-01-27]
+## 4.7. Set-up VirtualBox [REMOVED as of 2022-01-27]
 
 Reference: [official virtualbox documentation](https://www.virtualbox.org/wiki/Linux_Downloads)
 
@@ -548,21 +557,21 @@ sudo apt-key del "KEY STRING"
 sudo rm /etc/apt/sources.list.d/virtualbox.list
 ```
 
-## 4.7. Install Docker
+## 4.8. Install Docker
 
-## 4.8. Set-up Kubernetes
+## 4.9. Set-up Kubernetes
 
 There are multiple ways to set-up K8S; 
 
-### 4.8.1. Method1: Using KIND
+### 4.9.1. Method1: Using KIND
 
 Please refer to the notes [in this GitHub repo](https://github.com/isuruwg/ml-k8s-tutorial#21-installing-for-local-development)
 
-### 4.8.2. Method 2: Using Vagrant and Ansible
+### 4.9.2. Method 2: Using Vagrant and Ansible
 
 Reference : [Install K8S with Vagrant and Ansible](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
 
-#### 4.8.2.1. Install Vagrant
+#### 4.9.2.1. Install Vagrant
 
 Ref: [vagrantup](https://www.vagrantup.com/downloads)
 
@@ -588,7 +597,7 @@ logout # to log out from the vm
 vagrant destroy
 ```
 
-#### 4.8.2.2. Install Ansible
+#### 4.9.2.2. Install Ansible
 
 Please refer to the [section on installing the essentials](#2-installconfigure-the-essentials) above to install Ansible if you haven't already done so.
 
@@ -609,7 +618,7 @@ pip install ansible
 pip freeze > requirements.txt
 ```
 
-#### 4.8.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
+#### 4.9.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
 I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.**168**.56.0/21.
 
@@ -635,7 +644,7 @@ vagrant ssh node-1
 vagrant ssh node-2
 ```
 
-### 4.8.3. Method 3: Using K3D
+### 4.9.3. Method 3: Using K3D
 
 
 
