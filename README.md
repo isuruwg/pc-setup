@@ -559,6 +559,87 @@ sudo rm /etc/apt/sources.list.d/virtualbox.list
 
 ## 4.8. Install Docker
 
+[Install Docker engine using the official repository from Docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+
+[Then please follow the instructions here to run the Docker daemon as a non-root user (Rootless mode)](https://docs.docker.com/engine/security/rootless/)
+
+```bash
+# Please use the instructions in the above reference link. The following set of instructions may be outdated
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update
+
+sudo apt-get install \
+   ca-certificates \
+   curl \
+   gnupg \
+   lsb-release
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+
+```bash
+# Setting up rootless mode
+
+# Follow the pre-requisites in the reference link above
+
+# If all prerequisites are met, then do the following
+sudo apt install uidmap
+sudo apt install dbus-user-session
+
+# Re-login
+
+sudo systemctl disable --now docker.service docker.socket
+
+dockerd-rootless-setuptool.sh install
+
+# Set DOCKER_HOST environment variable (Add to bashrc)
+echo 'export DOCKER_HOST=unix:///run/user/1000/docker.sock' >> ~/.bashrc 
+
+# Install Docker ce rootless extras if not present
+sudo apt-get install -y docker-ce-rootless-extras
+```
+
+```bash
+# Usage instructions for rootles mode
+
+# Start manually
+systemctl --user start docker
+
+# Optional: launch daemon on system startup # I DID NOT DO THIS STEP
+systemctl --user enable docker
+sudo loginctl enable-linger $(whoami)
+```
+
+Known limitations of rootless mode
+
+- Only the following storage drivers are supported:
+    - overlay2 (only if running with kernel 5.11 or later, or Ubuntu-flavored kernel)
+    - fuse-overlayfs (only if running with kernel 4.18 or later, and fuse-overlayfs is installed)
+    - btrfs (only if running with kernel 4.18 or later, or ~/.local/share/docker is mounted with user_subvol_rm_allowed mount option)
+    - vfs
+- Cgroup is supported only when running with cgroup v2 and systemd. See Limiting resources.
+- Following features are not supported:
+    - AppArmor
+    - Checkpoint
+    - Overlay network
+    - Exposing SCTP ports
+- To use the ping command, see Routing ping packets.
+- To expose privileged TCP/UDP ports (< 1024), see Exposing privileged ports.
+- IPAddress shown in docker inspect and is namespaced inside RootlessKit’s network namespace. This means the IP address is not reachable from the host without nsenter-ing into the network namespace.
+- Host network (docker run --net=host) is also namespaced inside RootlessKit.
+- NFS mounts as the docker “data-root” is not supported. This limitation is not specific to rootless mode.
+
+
+
+
 ## 4.9. Set-up Kubernetes
 
 There are multiple ways to set-up K8S; 
