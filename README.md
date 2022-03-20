@@ -12,16 +12,19 @@
   - [2.4. VSCode](#24-vscode)
     - [2.4.1. My preferred settings](#241-my-preferred-settings)
     - [2.4.2. VSCode plugins](#242-vscode-plugins)
-  - [2.5. Sensors](#25-sensors)
-  - [2.6. Python](#26-python)
-    - [2.6.1. Install pyenv](#261-install-pyenv)
-    - [2.6.2. Install Poetry](#262-install-poetry)
-  - [2.7. Install Ansible](#27-install-ansible)
-  - [2.8. Setup pre-commit for git [optional]](#28-setup-pre-commit-for-git-optional)
-  - [2.9. xautolock](#29-xautolock)
-  - [2.10. Aptitude](#210-aptitude)
-  - [2.11. tmux](#211-tmux)
-    - [2.11.1. Setup tmux](#2111-setup-tmux)
+  - [2.5. VIM](#25-vim)
+    - [2.5.1. install vim-plug](#251-install-vim-plug)
+    - [2.5.2. Setup Latex with VIM](#252-setup-latex-with-vim)
+  - [2.6. Sensors](#26-sensors)
+  - [2.7. Python](#27-python)
+    - [2.7.1. Install pyenv](#271-install-pyenv)
+    - [2.7.2. Install Poetry](#272-install-poetry)
+  - [2.8. Install Ansible](#28-install-ansible)
+  - [2.9. Setup pre-commit for git [optional]](#29-setup-pre-commit-for-git-optional)
+  - [2.10. xautolock](#210-xautolock)
+  - [2.11. Aptitude](#211-aptitude)
+  - [2.12. tmux](#212-tmux)
+    - [2.12.1. Setup tmux](#2121-setup-tmux)
 - [3. Install i3](#3-install-i3)
   - [3.1. Setting up networking](#31-setting-up-networking)
   - [3.2. Install nicer fonts](#32-install-nicer-fonts)
@@ -38,20 +41,21 @@
   - [4.1. Fail2ban (Needed only if you have enabled connections through your firewall)](#41-fail2ban-needed-only-if-you-have-enabled-connections-through-your-firewall)
   - [4.2. VLC](#42-vlc)
   - [4.3. gnome pomodoro](#43-gnome-pomodoro)
-  - [4.4. gnucash](#44-gnucash)
-  - [4.5. Install chromium](#45-install-chromium)
-  - [4.6. 7-zip](#46-7-zip)
-  - [4.7. Set-up VirtualBox [REMOVED as of 2022-01-27]](#47-set-up-virtualbox-removed-as-of-2022-01-27)
-  - [4.8. Install Docker](#48-install-docker)
-  - [4.9. Install Docker Compose](#49-install-docker-compose)
-  - [4.10. Install NVIDIA Docker](#410-install-nvidia-docker)
-  - [4.11. Set-up Kubernetes](#411-set-up-kubernetes)
-    - [4.11.1. Method1: Using KIND](#4111-method1-using-kind)
-    - [4.11.2. Method 2: Using Vagrant and Ansible](#4112-method-2-using-vagrant-and-ansible)
-      - [4.11.2.1. Install Vagrant](#41121-install-vagrant)
-      - [4.11.2.2. Install Ansible](#41122-install-ansible)
-      - [4.11.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#41123-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
-    - [4.11.3. Method 3: Using K3D](#4113-method-3-using-k3d)
+  - [4.4. Google Cloud CLI](#44-google-cloud-cli)
+  - [4.5. gnucash](#45-gnucash)
+  - [4.6. Install chromium](#46-install-chromium)
+  - [4.7. 7-zip](#47-7-zip)
+  - [4.8. Set-up VirtualBox [REMOVED as of 2022-01-27]](#48-set-up-virtualbox-removed-as-of-2022-01-27)
+  - [4.9. Install Docker](#49-install-docker)
+  - [4.10. Install Docker Compose](#410-install-docker-compose)
+  - [4.11. Install NVIDIA Docker](#411-install-nvidia-docker)
+  - [4.12. Set-up Kubernetes](#412-set-up-kubernetes)
+    - [4.12.1. Method1: Using KIND](#4121-method1-using-kind)
+    - [4.12.2. Method 2: Using Vagrant and Ansible](#4122-method-2-using-vagrant-and-ansible)
+      - [4.12.2.1. Install Vagrant](#41221-install-vagrant)
+      - [4.12.2.2. Install Ansible](#41222-install-ansible)
+      - [4.12.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible](#41223-up-and-running-and-troubleshooting-sweat_smile--with-vagrant-and-ansible)
+    - [4.12.3. Method 3: Using K3D](#4123-method-3-using-k3d)
 - [5. Troubleshooting](#5-troubleshooting)
   - [5.1. SD card mounts as read only on Ubuntu](#51-sd-card-mounts-as-read-only-on-ubuntu)
 
@@ -156,8 +160,74 @@ Editor Font size: 16
 
 1. [Markdown emoji](https://marketplace.visualstudio.com/items?itemName=bierner.markdown-emoji)
 2. [Markdown all in one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
+3. [LaTex Workshop](https://marketplace.visualstudio.com/items?itemName=James-Yu.latex-workshop)
+   - Install the following for this: 
+      ```bash
+      # Install texlive
+      sudo apt install texlive
+      sudo apt install latexmk
+      sudo apt install texlive-luatex
+      ```
+## 2.5. VIM 
 
-## 2.5. Sensors
+```bash
+# Install vim
+sudo apt install vim
+
+#open vim
+vim
+
+# do the following commands inside vim
+:e ~/.vimrc
+:r $VIMRUNTIME/vimrc_example.vim
+:wq
+```
+
+### 2.5.1. install vim-plug
+
+[REF](https://github.com/junegunn/vim-plug)
+
+```bash
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+```
+
+Some common vim-plug commands:
+|              Command              	|                            Description                            	|
+|:---------------------------------:	|:-----------------------------------------------------------------:	|
+| PlugInstall [name ...] [#threads] 	| Install plugins                                                   	|
+| PlugUpdate [name ...] [#threads]  	| Install or update plugins                                         	|
+| PlugClean[!]                      	| Remove unlisted plugins (bang version will clean without prompt)  	|
+| PlugUpgrade                       	| Upgrade vim-plug itself                                           	|
+| PlugStatus                        	| Check the status of plugins                                       	|
+| PlugDiff                          	| Examine changes from the previous update and the pending changes  	|
+| PlugSnapshot[!] [output path]     	| Generate script for restoring the current snapshot of the plugins 	|
+
+### 2.5.2. Setup Latex with VIM
+
+References: 
+1. [VIM and Latex](https://castel.dev/post/lecture-notes-1/#correcting-spelling-mistakes-on-the-fly)
+2. [VIM and Latex, Reddit](https://www.reddit.com/r/LaTeX/comments/c8tslo/does_anyone_know_of_a_good_vim_latex_guide/)
+
+```bash
+# Install texlive
+sudo apt install texlive
+sudo apt install latexmk
+```
+
+```vim
+# Make sure you have vim-plug installed
+# Add the following to ~/.vimrc
+
+call plug#begin()
+
+Plug 'lervag/vimtex'
+
+call plug#end()
+```
+Reload vim and do `:PlugInstall` to install plugins.
+
+## 2.6. Sensors
 
 ```bash
 sudo apt install lm-sensors 
@@ -167,9 +237,9 @@ watch -d sensors
 # or just do, "sensors" to view temperature once. 
 ```
 
-## 2.6. Python
+## 2.7. Python
 
-### 2.6.1. Install pyenv
+### 2.7.1. Install pyenv
 
 [Pyenv](https://github.com/pyenv/pyenv) helps keep multiple Python version in your machine.
 
@@ -221,7 +291,7 @@ pyenv global 3.10.1
 pyenv local 3.10.1
 ```
 
-### 2.6.2. Install Poetry
+### 2.7.2. Install Poetry
 
 [[REF](https://github.com/python-poetry/poetry#installation)]
 
@@ -237,7 +307,7 @@ poetry --version
 
 If you would like to uninstall poetry, you can do so anytime by doing: `curl -sSL https://install.python-poetry.org | python3 - --uninstall`
 
-## 2.7. Install Ansible
+## 2.8. Install Ansible
 
 Ref: [Ansible doc](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible-with-pip)
 
@@ -249,7 +319,7 @@ cd setup-using-ansible
 poetry install
 ```
 
-## 2.8. Setup pre-commit for git [optional]
+## 2.9. Setup pre-commit for git [optional]
 
 Setting up pre-commit using poetry ([pyproject.toml](pyproject.toml)) file. 
 ```bash
@@ -267,7 +337,7 @@ poetry add pre-commit
 pre-commit install --allow-missing-config
 ```
 
-## 2.9. xautolock
+## 2.10. xautolock
 
 xautolock is required for automatically locking the screen with i3. If you are not using i3, this is not needed
 
@@ -275,7 +345,7 @@ xautolock is required for automatically locking the screen with i3. If you are n
 sudo apt install xautolock
 ```
 
-## 2.10. Aptitude
+## 2.11. Aptitude
 
 Aptitude is not required to be installed as Ubuntu already comes with apt and apt-get. However, if you are using i3blocks with a checkupdates script as mentioned in the next section, please install aptitude by doing;
 
@@ -283,13 +353,13 @@ Aptitude is not required to be installed as Ubuntu already comes with apt and ap
 sudo apt install aptitude
 ```
 
-## 2.11. tmux
+## 2.12. tmux
 
 ```bash
 sudo apt install tmux
 ```
 
-### 2.11.1. Setup tmux
+### 2.12.1. Setup tmux
 
 ```bash
 # create ~/.tmux.conf
@@ -502,25 +572,27 @@ sudo snap install vlc
 sudo apt-get install gnome-shell-pomodoro
 ```
 
-## 4.4. gnucash
+## 4.4. Google Cloud CLI
+
+## 4.5. gnucash
 
 ```
 sudo apt install gnucash
 ```
 
-## 4.5. Install chromium
+## 4.6. Install chromium
 
 ```bash
 sudo snap install chromium
 ```
 
-## 4.6. 7-zip
+## 4.7. 7-zip
 
 ```bash
 sudo apt install p7zip-full
 ```
 
-## 4.7. Set-up VirtualBox [REMOVED as of 2022-01-27]
+## 4.8. Set-up VirtualBox [REMOVED as of 2022-01-27]
 
 Reference: [official virtualbox documentation](https://www.virtualbox.org/wiki/Linux_Downloads)
 
@@ -559,7 +631,7 @@ sudo apt-key del "KEY STRING"
 sudo rm /etc/apt/sources.list.d/virtualbox.list
 ```
 
-## 4.8. Install Docker
+## 4.9. Install Docker
 
 [Install Docker engine using the official repository from Docker](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
 
@@ -639,7 +711,7 @@ Known limitations of rootless mode
 - Host network (docker run --net=host) is also namespaced inside RootlessKit.
 - NFS mounts as the docker “data-root” is not supported. This limitation is not specific to rootless mode.
 
-## 4.9. Install Docker Compose
+## 4.10. Install Docker Compose
 
 [Install Docker compose V2](https://docs.docker.com/compose/cli-command/)
 
@@ -652,7 +724,7 @@ curl -SL https://github.com/docker/compose/releases/download/v2.2.3/docker-compo
 
 ```
 
-## 4.10. Install NVIDIA Docker
+## 4.11. Install NVIDIA Docker
 
 [Please follow this guide](https://docs.nvidia.com/ai-enterprise/deployment-guide/dg-docker.html)
 
@@ -673,20 +745,37 @@ Since we are using Docker in rootless mode, you would have to also add the follo
 no-cgroups=true
 ```
 
+Test the new installation:
 
-## 4.11. Set-up Kubernetes
+```bash
+docker run --gpus all nvidia/cuda:11.0-base nvidia-smi
+```
+
+Test Tensorflow GPU
+
+```bash
+docker run --gpus all -it --rm tensorflow/tensorflow:latest-gpu \
+   python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"
+
+
+# Run with Jupyter
+docker run -it --rm --gpus all -p 8888:8888 tensorflow/tensorflow:latest-gpu-jupyter
+```
+
+
+## 4.12. Set-up Kubernetes
 
 There are multiple ways to set-up K8S; 
 
-### 4.11.1. Method1: Using KIND
+### 4.12.1. Method1: Using KIND
 
 Please refer to the notes [in this GitHub repo](https://github.com/isuruwg/ml-k8s-tutorial#21-installing-for-local-development)
 
-### 4.11.2. Method 2: Using Vagrant and Ansible
+### 4.12.2. Method 2: Using Vagrant and Ansible
 
 Reference : [Install K8S with Vagrant and Ansible](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
 
-#### 4.11.2.1. Install Vagrant
+#### 4.12.2.1. Install Vagrant
 
 Ref: [vagrantup](https://www.vagrantup.com/downloads)
 
@@ -712,7 +801,7 @@ logout # to log out from the vm
 vagrant destroy
 ```
 
-#### 4.11.2.2. Install Ansible
+#### 4.12.2.2. Install Ansible
 
 Please refer to the [section on installing the essentials](#2-installconfigure-the-essentials) above to install Ansible if you haven't already done so.
 
@@ -733,7 +822,7 @@ pip install ansible
 pip freeze > requirements.txt
 ```
 
-#### 4.11.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
+#### 4.12.2.3. Up and running (and troubleshooting :sweat_smile: ) with Vagrant and Ansible
 
 I had to change the IP ranges used in the reference document as Virtualbox > 6.1.28 restricts host only network adapters to IPs in the range 192.168.56.0/21 by default. ([ref](https://stackoverflow.com/questions/69722254/vagrant-up-failing-for-virtualbox-provider-on-ubuntu)), the [virtualbox documentation](https://www.virtualbox.org/manual/ch06.html#network_hostonly) and the stackoverflow answer wrongly mentions this range as 192.68.56.0/21, but this doesn't work. It's apparently 192.**168**.56.0/21.
 
@@ -759,7 +848,7 @@ vagrant ssh node-1
 vagrant ssh node-2
 ```
 
-### 4.11.3. Method 3: Using K3D
+### 4.12.3. Method 3: Using K3D
 
 
 
