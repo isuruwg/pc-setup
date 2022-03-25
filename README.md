@@ -45,6 +45,7 @@
   - [4.5. gnucash](#45-gnucash)
   - [4.6. Install chromium](#46-install-chromium)
   - [4.7. 7-zip](#47-7-zip)
+  - [Pandoc](#pandoc)
   - [4.8. Set-up VirtualBox [REMOVED as of 2022-01-27]](#48-set-up-virtualbox-removed-as-of-2022-01-27)
   - [4.9. Install Docker](#49-install-docker)
   - [4.10. Install Docker Compose](#410-install-docker-compose)
@@ -590,6 +591,14 @@ sudo snap install chromium
 
 ```bash
 sudo apt install p7zip-full
+```
+
+## Pandoc
+
+[[Ref](https://pandoc.org/installing.html)]
+
+```bash
+sudo apt install pandoc
 ```
 
 ## 4.8. Set-up VirtualBox [REMOVED as of 2022-01-27]
